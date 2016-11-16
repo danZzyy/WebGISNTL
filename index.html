@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>GEOG498K Web GIS</title>
+
+	<link rel="stylesheet" href="https://js.arcgis.com/4.1/esri/css/main.css">
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans" />
+	<link rel="stylesheet" href="mapstyle.css">
+	<script src="https://js.arcgis.com/4.1"></script>
+	<script src="mapscript.js"></script>
+</head>
+<body >
+	<header>
+		<h2>World Bank Nighttime Light</h2>
+	</header>
+	<nav>
+		<li><a href="about.html" target="_blank"><strong>Web GIS</strong></a></li>
+		<li><a href="http://www.hcpss.org/" target="_blank"><strong>Howard County Public School System</strong></a></li>
+		<li><a href="contact.html" target="_blank"><strong>Contact</strong></a></li>
+	</nav>
+
+	<section>
+		<table width="100%" border="1" cellpadding="10">
+			<tr>
+				<td valign="top" width="20%">
+					<table width="100%" border="0" cellpadding="5">
+						<tr>
+							<!-- filler for form -->
+						</tr>
+						<tr>
+							<td colspan="2"><hr></td>
+						</tr>
+						<tr>
+							<!-- filler for form -->
+						</tr>
+						<tr>
+							<td colspan="2"><hr></td>
+						</tr>
+						<tr>
+							<!-- filler for form -->
+						</tr>
+						<tr>
+							<td colspan="1" align="center">
+								<input type="button" id="query" value="Search point">
+							</td>
+							<td colspan="2" align="center">
+								<input type="button" id="query2" value="Search poly">
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2"><hr></td>
+						</tr>
+					</table>
+				</td>
+				<td width="60%">
+					<div id="viewDiv"></div>
+				</td>
+				<td width="30%">
+					<h4>Saved Queries</h4>
+					<div id="savedDiv">
+						<table id="savedQueries">
+							<tbody>
+								<tr><td>Query 1</td></tr>
+								<tr><td>Query 2</td></tr>
+								<tr><td>Query 3</td></tr>
+								<tr><td>Query 4</td></tr>
+								<tr><td>-</td></tr>
+								<tr><td>-</td></tr>
+								<tr><td>-</td></tr>
+								<tr><td>-</td></tr>
+								<tr><td>-</td></tr>
+								<tr><td>-</td></tr>
+								<tr><td>-</td></tr>
+								<tr><td>-</td></tr>
+								<tr><td>-</td></tr>
+								<tr><td>-</td></tr>
+								<tr><td>-</td></tr>
+								<tr><td>-</td></tr>
+								<tr><td>-</td></tr>
+								<tr><td>-</td></tr>
+								<tr><td>-</td></tr>
+								<tr><td>-</td></tr>
+								<tr><td>-</td></tr>
+								<tr><td>-</td></tr>
+								<tr><td>-</td></tr>
+							</tbody>
+						</table>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<div id="result">
+						<h4 id="resultHeader">Results<h4>
+						<table id="resultTable">
+							<thead>
+								<tr>
+									<td>Attr 1</td>
+									<td>Attr 2</td>
+									<td>Attr 3</td>
+									<td>Attr 4</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>-</td>
+									<td>-</td>
+									<td>-</td>
+									<td>-</td>
+								</tr>
+								<tr>
+									<td>-</td>
+									<td>-</td>
+									<td>-</td>
+									<td>-</td>
+								</tr>
+								<tr>
+									<td>-</td>
+									<td>-</td>
+									<td>-</td>
+									<td>-</td>
+								</tr>
+								<tr>
+									<td>-</td>
+									<td>-</td>
+									<td>-</td>
+									<td>-</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</section>
+
+	<footer><p>&copy; Dr. Naijun Zhou, njzhou@umd.edu, UMD GEOG498K Fall 2016 Web GIS. All rights reserved.</p></footer>
+</body>
+</html>
