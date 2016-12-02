@@ -38,7 +38,7 @@ require([
             var resultsLayer = new GraphicsLayer();
 
             var map = new Map({
-                basemap: "satellite",
+                basemap: "hybrid",
                 layers: [radcalT0Layer, radcalT1Layer, NTLFPLayer]
             });
 
@@ -48,7 +48,22 @@ require([
                 zoom: 7, // Sets the zoom level based on level of detail (LOD)
                 center: [8.0, 6.0]
             });
+            var layer1Check = dom.byId("layer1");
+            var layer2Check = dom.byId("layer2");
+            var layer3Check = dom.byId("layer3");
 
+            on(layer1Check, "change", function(){
+                radcalT0Layer.visible = layer1Check.checked;
+            })
+
+            on(layer2Check, "change", function(){
+                radcalT1Layer.visible = layer2Check.checked;
+            })
+
+            on(layer3Check, "change", function(){
+                NTLFPLayer.visible = layer3Check.checked;
+            })
+            
 
         });
 
