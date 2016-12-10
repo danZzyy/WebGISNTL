@@ -42,7 +42,8 @@ require([
                 visible: true
             });
 
-            var subsaharanT1 = "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_WEBNTL/MapServer/3"
+            var subsaharanT1 = "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_WEBNTL/MapServer/3";
+            var radcalT1Layer = new FeatureLayer({
                 url: subsaharanT1,
                 popupTemplate: {
                   title: "Radiance Calibrated NTL Urban Extent in 2010",
