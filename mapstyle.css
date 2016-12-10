@@ -153,3 +153,7 @@ li {
 #resultTable td{
 	border: solid 1px;
 }
+
+#popDiv{
+	width: 200px;
+}
