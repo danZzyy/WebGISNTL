@@ -79,15 +79,16 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="1" align="center">
-                                    <input type="button" id="query" value="Search point">
-                                </td>
-                                <td colspan="2" align="center">
-                                    <input type="button" id="query2" value="Search poly">
-                                </td>
+                               
+                                
                             </tr>
                             <tr>
                                 <td colspan="2"><hr></td>
+                            </tr>
+                            <tr>
+                            	 <td colspan="1" align="center">
+                                    <input class="button" type="button" id="query" value="RUN QUERY">
+                                </td>
                             </tr>
                         </table>
                     </div>
@@ -124,8 +125,9 @@
                                 <tr><td>-</td></tr>
                                 <tr><td>-</td></tr>
                             </tbody>
-                        </table> 
+                        </table>
 					</div>
+					<input class="button" type="button" id="rerunQuery" value="RUN QUERY AGAIN">
 				</td>
 			</tr>
 			<tr>
@@ -168,6 +170,10 @@
 								</tr>
 							</tbody>
 						</table>
+					</div>
+						<div id="saveForm">
+							Name your query: <input type="text" name="queryName">  <input class="button" type="button" id="saveQuery" value="SAVE QUERY">
+						</div>
 					</div>
 				</td>
 				<td>

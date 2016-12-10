@@ -157,3 +157,25 @@ li {
 #popDiv{
 	width: 200px;
 }
+
+#saveForm{
+	margin: auto;
+    width: 500px;
+}
+
+#rerunQuery{
+	margin-left: 20%;
+	width: 150px;
+}
+.button {
+    background-color: #000;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 8px 20px;
+    text-align: center;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
