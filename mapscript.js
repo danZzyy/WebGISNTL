@@ -16,6 +16,28 @@ require([
             var subsaharanT0 ="https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_NTL_DATA/MapServer/4"
             var radcalT0Layer = new FeatureLayer({
                 url: subsaharanT0,
+                popupTemplate: {
+                  title: "Radiance Calibrated NTL Urban Extent in 1996",
+                  content: [{
+                    type: "text",
+                    text: "</b>{ExtentName:checkExtentName}</b> has an area of <b>{gAreaKM:NumberFormat} kilometers</b>. " +
+                    "This urban extent was " + "</b>{Status}</b> which means that it {Status:checkStatusType}" +
+                    "There are <b>{CtyCntT0}</b> cities in this <b>{ExtTypeT0}</b> type urban extent."
+                  },  {
+                    type: "media",
+                    mediaInfos: [{
+                      title: "<b>RC Values 1996-2010<b>",
+                      type: "bar-chart",
+                      caption: "",
+                      value: {
+                        fields: ["rc1996", "rc1999", "rc2000", "rc2002", "rc2004", "rc2005", "rc2010"],
+                        normalizeField: null,
+                        tooltipField: ["rc1996", "rc1999", "rc2000", "rc2002", "rc2004", "rc2005", "rc2010"]
+                      }
+                    }]
+                  }]
+                },
+
                 outFields: ["*"],
                 visible: true
             });
@@ -23,6 +45,29 @@ require([
             var subsaharanT1 = "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_NTL_DATA/MapServer/3"
             var radcalT1Layer = new FeatureLayer({
                 url: subsaharanT1,
+                popupTemplate: {
+                  title: "Radiance Calibrated NTL Urban Extent in 2010",
+                  content: [{
+                    type: "text",
+                    text: "</b>{ExtentName:checkExtentName}</b> has an area of <b>{gAreaKM:NumberFormat} KM</b>, with a net area change of <b>{areaChg:NumberFormat} KM</b>. " +
+                    "This urban extent was " + "</b>{Status}</b> which means that it {Status:checkStatusType}" +
+                    "There are <b>{CtyCntT0}</b> cities in this <b>{ExtTypeT0}</b> type urban extent." +
+                    "\n The net change in NTL brightness DN is <b>{ntlChange:NumberFormat}</b>"
+                  },  {
+                    type: "media",
+                    mediaInfos: [{
+                      title: "<b>RC Values 1996-2010<b>",
+                      type: "bar-chart",
+                      caption: "",
+                      value: {
+                        fields: ["rc1996", "rc1999", "rc2000", "rc2002", "rc2004", "rc2005", "rc2010"],
+                        normalizeField: null,
+                        tooltipField: ["rc1996", "rc1999", "rc2000", "rc2002", "rc2004", "rc2005", "rc2010"]
+                      }
+                    }]
+                  }]
+                },
+
                 outFields: ["*"],
                 visible: true
             });
@@ -33,6 +78,32 @@ require([
                 outFields: ["*"],
                 visible: true
             });
+
+            checkExtentName = function (value, key, data) {
+              //Check if Extent has a defined name or is -1
+              if (data.ExtentName != "-1") {
+                return data.ExtentName;
+              } else {
+                return "This Urban Extent"
+              }
+            }
+
+            checkStatusType = function (value, key, data) {
+              //check Status and return appropriate context explanation
+              console.log(data.Status)
+              switch (data.Status) {
+                case "FOUND":
+                  context = "intersects cities in both 1996 and 2010.";
+                  break;
+                case "MISSED":
+                  context = "does not intersect any cities.";
+                  break;
+                case "APPEAR":
+                  context = "intersects extent only in 2010.";
+              }
+              return context;
+            }
+
 
             //GraphicsLayer for displaying results
             var resultsLayer = new GraphicsLayer();
@@ -63,7 +134,16 @@ require([
             on(layer3Check, "change", function(){
                 NTLFPLayer.visible = layer3Check.checked;
             })
-            
+
+            var searchWidget = new Search({
+              view: view
+            });
+            searchWidget.startup();
+
+            view.ui.add(searchWidget, {
+              position: "top-left",
+              index: 0
+            });
 
         });
 
