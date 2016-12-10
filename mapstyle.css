@@ -82,6 +82,7 @@ body {
     height: 50%;
     margin: 2%;
 }
+
 #uiContainer {
     width: 100%;
 }
@@ -94,6 +95,9 @@ li {
 	margin-right: 20px;
 }
 
+#toolRibbonDiv {
+
+}
 #layersDiv {
     width: 200px;
     height: 400px;

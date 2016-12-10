@@ -3,13 +3,14 @@ require([
             "esri/views/MapView",
             "esri/layers/FeatureLayer",
             "esri/widgets/Search",
+            "esri/widgets/Home",
             "esri/layers/GraphicsLayer",
             "esri/geometry/geometryEngine",
             "esri/Graphic",
             "esri/symbols/SimpleFillSymbol",
             "esri/symbols/SimpleMarkerSymbol",
-            "dojo/on",
             "dojo/dom",
+            "dojo/on",
             "dojo/dom-construct",
             "dojo/domReady!"
         ], function(Map, MapView, FeatureLayer, Search, GraphicsLayer, geometryEngine, Graphic, SimpleFillSymbol, SimpleMarkerSymbol, on, dom, domconstruct) {
@@ -148,10 +149,10 @@ require([
 
         });
 
-        function isInt(value) {
-            if (isNaN(value)) {
-                return false;
-            }
-            var x = parseFloat(value);
-            return (x | 0) === x;
-        }
+function isInt(value) {
+    if (isNaN(value)) {
+        return false;
+    }
+    var x = parseFloat(value);
+    return (x | 0) === x;
+}
