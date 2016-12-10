@@ -48,6 +48,7 @@ require([
                 zoom: 7, // Sets the zoom level based on level of detail (LOD)
                 center: [8.0, 6.0]
             });
+
             var layer1Check = dom.byId("layer1");
             var layer2Check = dom.byId("layer2");
             var layer3Check = dom.byId("layer3");

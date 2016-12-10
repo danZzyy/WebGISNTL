@@ -10,97 +10,121 @@
 	<script src="https://js.arcgis.com/4.1"></script>
 	<script src="mapscript.js"></script>
 </head>
-<body >
+<body>
+    <!-- Header Layout -->
     <div id="headerWrapper">
-        <img src="http://www.worldbank.org//sites/all/themes/homepage/templates/header/img/logo-wb-header-en.svg"></img>
-        <header>
-            <h2>World Bank Nighttime Light</h2>
-        </header>
-    </div>
-	<nav>
-		<li><a href="about.html" target="_blank"><strong>Web GIS</strong></a></li>
-		<li><a href="http://www.worldbank.org/" target="_blank"><strong>World Bank</strong></a></li>
-		<li><a href="contact.html" target="_blank"><strong>Contact</strong></a></li>
-	</nav>
+        <div class="headerContainer">
+            <!-- Line 1 of header -->
+            <ul class="headerUpperLine">
+                <li class="h_Logo" display="inline">
+                    <img src="http://www.worldbank.org//sites/all/themes/homepage/templates/header/img/logo-wb-header-en.svg"></img>
+                </li>
+                <li class="h_Title" display="inline">The Nighttime Light Dataset</li>
 
-	<section>
-		<table width="100%" border="1" cellpadding="10">
-			<tr>
-				<td valign="top" width="20%">
-					<table width="100%" border="0" cellpadding="5">
-						<tr>
-							<h3>Toggle Layers</h3>
-						</tr>
-						<tr>
-							<span id="layerToggle">
-    							<input type="checkbox" id="layer1" checked> RadCal T0 <br>
-    							<input type="checkbox" id="layer2"  checked> RadCal T1 <br>
-    							<input type="checkbox" id="layer3"  checked> NTLFP
-  							</span>
-						</tr>
-						<tr>
-							<td colspan="2"><hr></td>
-						</tr>
-						<tr>
-							<!-- filler for form -->
-						</tr>
-						<tr>
-							<td colspan="2"><hr></td>
-						</tr>
-						<tr>
-							<!-- filler for form -->
-							<td>
-								<h3>Year</h3>
-								<input type="radio" name="year" value="1996"> 1996 <br>
-								<input type="radio" name="year" value="2010"> 2010 <br>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="1" align="center">
-								<input type="button" id="query" value="Search point">
-							</td>
-							<td colspan="2" align="center">
-								<input type="button" id="query2" value="Search poly">
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2"><hr></td>
-						</tr>
-					</table>
+            </ul>
+
+        
+            <div class="nav">
+                <ul class="navList">
+                    <li class="menuHomeIcon">
+                        <a href="http://www.worldbank.org">
+                            <img src="http://www.worldbank.org/sites/all/themes/homepage/templates/header/img/home.png">
+                        </a>
+                    </li>
+                    <li><a href="about.html" target="_blank">Web GIS</a></li>
+                    <li><a href="">Data</a></li>
+                    <li><a href="">Other Regions</a></li>
+                    <li><a href="">Basemaps</a></li>
+                    <li><a href="http://www.worldbank.org/" target="_blank">The World Bank</a></li>
+                    <li><a href="">University of Maryland</a></li>
+                    <li><a href="contact.html" target="_blank">Contact</a></li>
+                </ul> 
+            </div>
+        </div>
+    </div>
+     
+    <hr id="greyLineTop">
+
+	<div id="tableDiv">
+        <table id="uiContainer" cellpadding="10" border="1"> 
+			<tr height="70%" border="1">
+				<td valign="top" width="200px">
+                    <div id="layersDiv">
+                        <table width="100%" border="0" cellpadding="5">
+                            <tr>
+                                <h3>Toggle Layers</h3>
+                            </tr>
+                            <tr>
+                                <span id="layerToggle">
+                                    <input type="checkbox" id="layer1"  checked> RadCal T0 <br>
+                                    <input type="checkbox" id="layer2"  checked> RadCal T1 <br>
+                                    <input type="checkbox" id="layer3"  checked> NTLFP
+                                </span>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><hr></td>
+                            </tr>
+                            <tr>
+                                <!-- filler for form -->
+                            </tr>
+                            <tr>
+                                <td colspan="2"><hr></td>
+                            </tr>
+                            <tr>
+                                <!-- filler for form -->
+                                <td>
+                                    <h3>Year</h3>
+                                    <input type="radio" name="year" value="1996"> 1996 <br>
+                                    <input type="radio" name="year" value="2010"> 2010 <br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" align="center">
+                                    <input type="button" id="query" value="Search point">
+                                </td>
+                                <td colspan="2" align="center">
+                                    <input type="button" id="query2" value="Search poly">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><hr></td>
+                            </tr>
+                        </table>
+                    </div>
 				</td>
 				<td width="60%">
-					<div id="viewDiv"></div>
+                    <div id="viewDiv"></div>
 				</td>
-				<td width="30%">
-					<h4>Saved Queries</h4>
+				<td width="20%">
 					<div id="savedDiv">
-						<table id="savedQueries">
-							<tbody>
-								<tr><td>Query 1</td></tr>
-								<tr><td>Query 2</td></tr>
-								<tr><td>Query 3</td></tr>
-								<tr><td>Query 4</td></tr>
-								<tr><td>-</td></tr>
-								<tr><td>-</td></tr>
-								<tr><td>-</td></tr>
-								<tr><td>-</td></tr>
-								<tr><td>-</td></tr>
-								<tr><td>-</td></tr>
-								<tr><td>-</td></tr>
-								<tr><td>-</td></tr>
-								<tr><td>-</td></tr>
-								<tr><td>-</td></tr>
-								<tr><td>-</td></tr>
-								<tr><td>-</td></tr>
-								<tr><td>-</td></tr>
-								<tr><td>-</td></tr>
-								<tr><td>-</td></tr>
-								<tr><td>-</td></tr>
-								<tr><td>-</td></tr>
-								<tr><td>-</td></tr>
-								<tr><td>-</td></tr>
-							</tbody>
-						</table>
+                        <h4 align="center">Saved Queries</h4>
+                        <table id="savedQueries">
+                            <tbody>
+                                <tr><td>Query 1</td></tr>
+                                <tr><td>Query 2</td></tr>
+                                <tr><td>Query 3</td></tr>
+                                <tr><td>Query 4</td></tr>
+                                <tr><td>-</td></tr>
+                                <tr><td>-</td></tr>
+                                <tr><td>-</td></tr>
+                                <tr><td>-</td></tr>
+                                <tr><td>-</td></tr>
+                                <tr><td>-</td></tr>
+                                <tr><td>-</td></tr>
+                                <tr><td>-</td></tr>
+                                <tr><td>-</td></tr>
+                                <tr><td>-</td></tr>
+                                <tr><td>-</td></tr>
+                                <tr><td>-</td></tr>
+                                <tr><td>-</td></tr>
+                                <tr><td>-</td></tr>
+                                <tr><td>-</td></tr>
+                                <tr><td>-</td></tr>
+                                <tr><td>-</td></tr>
+                                <tr><td>-</td></tr>
+                                <tr><td>-</td></tr>
+                            </tbody>
+                        </table> 
 					</div>
 				</td>
 			</tr>
@@ -148,7 +172,7 @@
 				</td>
 			</tr>
 		</table>
-	</section>
+	</div>
 
 	<footer><p>&copy; Dr. Naijun Zhou, njzhou@umd.edu, UMD GEOG498K Fall 2016 Web GIS. All rights reserved.</p></footer>
 </body>
