@@ -13,7 +13,7 @@ require([
             "dojo/dom-construct",
             "dojo/domReady!"
         ], function(Map, MapView, FeatureLayer, Search, GraphicsLayer, geometryEngine, Graphic, SimpleFillSymbol, SimpleMarkerSymbol, on, dom, domconstruct) {
-            var subsaharanT0 = "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_WEBNTL/MapServer/4";
+            var subsaharanT0 ="https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_NTL_DATA/MapServer/4"
             var radcalT0Layer = new FeatureLayer({
                 url: subsaharanT0,
                 popupTemplate: {
@@ -42,7 +42,7 @@ require([
                 visible: true
             });
 
-            var subsaharanT1 = "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_WEBNTL/MapServer/3";
+            var subsaharanT1 = "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_NTL_DATA/MapServer/3"
             var radcalT1Layer = new FeatureLayer({
                 url: subsaharanT1,
                 popupTemplate: {
@@ -72,25 +72,25 @@ require([
                 visible: true
             });
 
-            var subsaharanNTLFP = "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_WEBNTL/MapServer/2"
+            var subsaharanNTLFP = "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_NTL_DATA/MapServer/2"
             var NTLFPLayer = new FeatureLayer({
                 url: subsaharanNTLFP,
                 outFields: ["*"],
                 visible: true
             });
 
-            checkExtentName = function (value, key, data) {
+            function checkExtentName(value, key, data) {
               //Check if Extent has a defined name or is -1
               if (data.ExtentName != "-1") {
                 return data.ExtentName;
               } else {
-                return "This Urban Extent"
+                return "This Urban Extent";
               }
             }
 
-            checkStatusType = function (value, key, data) {
+            function checkStatusType(value, key, data) {
               //check Status and return appropriate context explanation
-              console.log(data.Status)
+              console.log(data.Status);
               switch (data.Status) {
                 case "FOUND":
                   context = "intersects cities in both 1996 and 2010.";
@@ -119,7 +119,6 @@ require([
                 zoom: 7, // Sets the zoom level based on level of detail (LOD)
                 center: [8.0, 6.0]
             });
-
             var layer1Check = dom.byId("layer1");
             var layer2Check = dom.byId("layer2");
             var layer3Check = dom.byId("layer3");
