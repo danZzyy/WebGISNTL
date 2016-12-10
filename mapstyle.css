@@ -69,13 +69,13 @@ body {
     padding-top: 0;
 }
 
-header, footer{
+/*header, footer{
 	padding: 1em;
 	color: white;
-	/* background-color: black; */
+	background-color: black;
 	text-align: center;
 	font-size: 120%;
-}
+}*/
 
 #tableDiv {
     width: 96%;

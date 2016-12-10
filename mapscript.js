@@ -13,21 +13,20 @@ require([
             "dojo/dom-construct",
             "dojo/domReady!"
         ], function(Map, MapView, FeatureLayer, Search, GraphicsLayer, geometryEngine, Graphic, SimpleFillSymbol, SimpleMarkerSymbol, on, dom, domconstruct) {
-            var subsaharanT0 ="https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_NTL_DATA/MapServer/4"
+            var subsaharanT0 = "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_WEBNTL/MapServer/4";
             var radcalT0Layer = new FeatureLayer({
                 url: subsaharanT0,
                 outFields: ["*"],
                 visible: true
             });
 
-            var subsaharanT1 = "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_NTL_DATA/MapServer/3"
-            var radcalT1Layer = new FeatureLayer({
+            var subsaharanT1 = "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_WEBNTL/MapServer/3"
                 url: subsaharanT1,
                 outFields: ["*"],
                 visible: true
             });
 
-            var subsaharanNTLFP = "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_NTL_DATA/MapServer/2"
+            var subsaharanNTLFP = "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_WEBNTL/MapServer/2"
             var NTLFPLayer = new FeatureLayer({
                 url: subsaharanNTLFP,
                 outFields: ["*"],
