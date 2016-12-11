@@ -15,22 +15,17 @@ require([
             "dojo/domReady!"
         ], function(Map, MapView, FeatureLayer, ImageryLayer, Search, GraphicsLayer, geometryEngine, Graphic, SimpleFillSymbol, SimpleMarkerSymbol, on, dom, domconstruct) {
 
-            var rasterLayer = new ImageryLayer({
+            /*var rasterLayer = new ImageryLayer({
               url: "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_NTL_DATA/MapServer/1",
               format: "jpgpng" // server exports in either jpg or png format
-            });
+            });*/
 
-            var subsaharanT0 ="https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_NTL_DATA/MapServer/4"
+            var subsaharanT0 ="https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/Endres_All_Footprints_And_Boundaries/MapServer/16"
             var radcalT0Layer = new FeatureLayer({
                 url: subsaharanT0,
                 popupTemplate: {
                   title: "Radiance Calibrated NTL Urban Extent in 1996",
                   content: [{
-                    type: "text",
-                    text: "</b>{ExtentName:checkExtentName}</b> has an area of <b>{gAreaKM:NumberFormat} kilometers</b>. " +
-                    "This urban extent was " + "</b>{Status}</b> which means that it {Status:checkStatusType}" +
-                    "There are <b>{CtyCntT0}</b> cities in this <b>{ExtTypeT0}</b> type urban extent."
-                  },  {
                     type: "media",
                     mediaInfos: [{
                       title: "<b>RC Values 1996-2010<b>",
@@ -49,18 +44,12 @@ require([
                 visible: true
             });
 
-            var subsaharanT1 = "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_NTL_DATA/MapServer/3"
+            var subsaharanT1 = "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/Endres_All_Footprints_And_Boundaries/MapServer/17"
             var radcalT1Layer = new FeatureLayer({
                 url: subsaharanT1,
                 popupTemplate: {
                   title: "Radiance Calibrated NTL Urban Extent in 2010",
                   content: [{
-                    type: "text",
-                    text: "</b>{ExtentName:checkExtentName}</b> has an area of <b>{gAreaKM:NumberFormat} KM</b>, with a net area change of <b>{areaChg:NumberFormat} KM</b>. " +
-                    "This urban extent was " + "</b>{Status}</b> which means that it {Status:checkStatusType}" +
-                    "There are <b>{CtyCntT0}</b> cities in this <b>{ExtTypeT0}</b> type urban extent." +
-                    "\n The net change in NTL brightness DN is <b>{ntlChange:NumberFormat}</b>"
-                  },  {
                     type: "media",
                     mediaInfos: [{
                       title: "<b>RC Values 1996-2010<b>",
@@ -79,12 +68,12 @@ require([
                 visible: true
             });
 
-            var subsaharanNTLFP = "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_NTL_DATA/MapServer/2"
+            /*var subsaharanNTLFP = "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_NTL_DATA/MapServer/2"
             var NTLFPLayer = new FeatureLayer({
                 url: subsaharanNTLFP,
                 outFields: ["*"],
                 visible: true
-            });
+            });*/
 
             checkExtentName = function (name) {
               //Check if Extent has a defined name or is -1
@@ -117,7 +106,7 @@ require([
 
             var map = new Map({
                 basemap: "hybrid",
-                layers: [radcalT0Layer, radcalT1Layer, NTLFPLayer]
+                layers: [radcalT0Layer, radcalT1Layer]
             });
 
             var view = new MapView({
@@ -158,7 +147,6 @@ require([
             var layer1Check = dom.byId("layer1");
             var layer2Check = dom.byId("layer2");
             var layer3Check = dom.byId("layer3");
-            var layer4Check = dom.byId("layer4");
 
             on(layer1Check, "change", function(){
                 radcalT0Layer.visible = layer1Check.checked;
@@ -166,14 +154,6 @@ require([
 
             on(layer2Check, "change", function(){
                 radcalT1Layer.visible = layer2Check.checked;
-            })
-
-            on(layer3Check, "change", function(){
-                NTLFPLayer.visible = layer3Check.checked;
-            })
-
-            on(layer4Check, "change", function(){
-                rasterLayer.visible = layer4Check.checked;
             })
 
             var searchWidget = new Search({
