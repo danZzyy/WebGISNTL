@@ -9,7 +9,7 @@ body {
 
 #headerWrapper {
     width: 96%;
-    height: 86px;
+    height: 85px;
     margin-left: 2%;
     margin-right: 2%;
     margin-bottom: 16px;
@@ -62,7 +62,7 @@ body {
 #headerWrapper .nav li a:hover {
     border-bottom: 2px solid #505050;
     color: #D6D6D6;
-    transition: border-bottom, .5s, fade-in;
+    /*transition: border-bottom, .2s, fade-in;*/
 }
 
 #greyLineTop {
