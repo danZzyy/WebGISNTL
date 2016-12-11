@@ -10,8 +10,8 @@ require([
             "esri/Graphic",
             "esri/symbols/SimpleFillSymbol",
             "esri/symbols/SimpleMarkerSymbol",
-            "dojo/on",
             "dojo/dom",
+            "dojo/on",
             "dojo/dom-construct",
             "dojo/domReady!"
         ], function(Map, MapView, FeatureLayer, ImageryLayer, Search, GraphicsLayer, geometryEngine, Graphic, SimpleFillSymbol, SimpleMarkerSymbol, on, dom, domconstruct) {
