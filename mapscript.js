@@ -137,14 +137,26 @@ require([
                 NTLFPLayer.visible = layer3Check.checked;
             })
 
+            // Defining and adding search widget
             var searchWidget = new Search({
               view: view
             });
             searchWidget.startup();
 
             view.ui.add(searchWidget, {
-              position: "top-left",
+              position: "top-right",
               index: 0
+            });
+            
+            // Defining and adding home widget
+            var homeWidget = new Home({
+                view: view
+            });
+            homeWidget.startup();
+
+            view.ui.add(homeWidget, {
+                position: "top-left",
+                index: 0
             });
 
         });
