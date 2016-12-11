@@ -4,6 +4,7 @@ require([
             "esri/layers/FeatureLayer",
             "esri/layers/ImageryLayer",
             "esri/widgets/Search",
+            "esri/widgets/Home",
             "esri/layers/GraphicsLayer",
             "esri/geometry/geometryEngine",
             "esri/Graphic",
@@ -156,22 +157,34 @@ require([
                 radcalT1Layer.visible = layer2Check.checked;
             })
 
+            // Defining and adding search widget
             var searchWidget = new Search({
               view: view
             });
             searchWidget.startup();
 
             view.ui.add(searchWidget, {
-              position: "top-left",
+              position: "top-right",
               index: 0
+            });
+            
+            // Defining and adding home widget
+            var homeWidget = new Home({
+                view: view
+            });
+            homeWidget.startup();
+
+            view.ui.add(homeWidget, {
+                position: "top-left",
+                index: 0
             });
 
         });
 
-        function isInt(value) {
-            if (isNaN(value)) {
-                return false;
-            }
-            var x = parseFloat(value);
-            return (x | 0) === x;
-        }
+function isInt(value) {
+    if (isNaN(value)) {
+        return false;
+    }
+    var x = parseFloat(value);
+    return (x | 0) === x;
+}
