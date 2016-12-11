@@ -26,6 +26,11 @@ require([
                 popupTemplate: {
                   title: "Radiance Calibrated NTL Urban Extent in 1996",
                   content: [{
+                    type: "text",
+                    text: "</b>{ExtentName:checkExtentName}</b> has an area of <b>{gAreaKM:NumberFormat} kilometers</b>. " +
+                    "This urban extent was " + "</b>{Status}</b> which means that it {Status:checkStatusType}" +
+                    "There are <b>{CtyCntT0}</b> cities in this <b>{ExtTypeT0}</b> type urban extent."
+                  }, {
                     type: "media",
                     mediaInfos: [{
                       title: "<b>RC Values 1996-2010<b>",
@@ -50,6 +55,12 @@ require([
                 popupTemplate: {
                   title: "Radiance Calibrated NTL Urban Extent in 2010",
                   content: [{
+                    type: "text",
+                    text: "</b>{ExtentName:checkExtentName}</b> has an area of <b>{gAreaKM:NumberFormat} KM</b>, with a net area change of <b>{areaChg:NumberFormat} KM</b>. " +
+                    "This urban extent was " + "</b>{Status}</b> which means that it {Status:checkStatusType}" +
+                    "There are <b>{CtyCntT0}</b> cities in this <b>{ExtTypeT0}</b> type urban extent." +
+                    "\n The net change in NTL brightness DN is <b>{ntlChange:NumberFormat}</b>"
+                  }, {
                     type: "media",
                     mediaInfos: [{
                       title: "<b>RC Values 1996-2010<b>",
@@ -75,19 +86,19 @@ require([
                 visible: true
             });*/
 
-            checkExtentName = function (name) {
+            checkExtentName = function (value, key, data) {
               //Check if Extent has a defined name or is -1
-              if (name != "-1") {
-                return name;
+              if (data.ExtentName != "-1") {
+                return data.ExtentName;
               } else {
                 return "This Urban Extent"
               }
             }
 
-            checkStatusType = function (status) {
+            checkStatusType = function (value, key, data) {
               //check Status and return appropriate context explanation
-              console.log(status)
-              switch (status) {
+              console.log(data.Status)
+              switch (data.Status) {
                 case "FOUND":
                   context = "intersects cities in both 1996 and 2010.";
                   break;
@@ -116,8 +127,11 @@ require([
                 center: [8.0, 6.0]
             });
 
+            /*
+            //Code to select feature on click and populate PopDiv with some info about the feature
             view.on("click", function(evt) {
               var screenPoint = evt.screenPoint;
+              window.alert("clicked");
 
               view.hitTest(screenPoint)
                 .then(getGraphics);
@@ -135,18 +149,17 @@ require([
               var cityCount = attributes.CtyCntT0;
               var extentType = attributes.ExtTypeT0;
 
-              dom.byId("popupDiv").innerHTML = "</b>" + extentName + "</b> has an area of <b>" + area  + "KM</b>, with a net area change of <b>" +
+              dom.byId("popupDiv").innerHTML = "<b>" + extentName + "</b> has an area of <b>" + area  + "KM</b>, with a net area change of <b>" +
               areaChange + " KM</b>. " +
-              "This urban extent was </b>" + status + "</b> which means that it " + statuscontext +
+              "This urban extent was <b>" + status + "</b> which means that it " + statuscontext +
               "There are <b>" + cityCount + "</b> cities in this <b>" + extentType + "</b> type urban extent." +
               "\n The net change in NTL brightness DN is <b>" + ntlchange + "</b>";
-            }
+            }*/
 
 
 
             var layer1Check = dom.byId("layer1");
             var layer2Check = dom.byId("layer2");
-            var layer3Check = dom.byId("layer3");
 
             on(layer1Check, "change", function(){
                 radcalT0Layer.visible = layer1Check.checked;
