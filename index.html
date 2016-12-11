@@ -48,32 +48,42 @@
 	<div id="tableDiv">
         <table id="uiContainer" cellpadding="10" border="1"> 
 			<tr height="70%" border="1">
-				<td valign="top" width="200px">
+				<td valign="top">
                     <div id="layersDiv">
                         <table width="100%" border="0" cellpadding="5">
                             <tr>
                                 <h3>Toggle Layers</h3>
                             </tr>
                             <tr>
-                                <span id="layerToggle">
+                                <div id="layerToggle">
                                     <input type="checkbox" id="layer1"  checked> RadCal T0 <br>
                                     <input type="checkbox" id="layer2"  checked> RadCal T1 <br>
                                     <input type="checkbox" id="layer3"  checked> NTLFP
-                                </span>
+                                </div>
                             </tr>
                             <tr>
-                                <td colspan="2"><hr></td>
+                                <td><hr>
+                                	<strong>Brightness</strong><br>
+                                	<span>
+	                                	<input type="radio" name="operator" value=">">	&#60; 
+	                                	<input type="radio" name="operator" value="<"> &#62; 
+	                                	<input type="radio" name="operator" value="="> &#61; &nbsp; &nbsp;
+	                                	<input type="number" name="bright" id="brightVal">
+	                                </span>
+                                </td>
                             </tr>
                             <tr>
                                 <!-- filler for form -->
                             </tr>
                             <tr>
-                                <td colspan="2"><hr></td>
+                                <td>
+                                	
+                                </td>
                             </tr>
                             <tr>
                                 <!-- filler for form -->
                                 <td>
-                                    <h3>Year</h3>
+                                    <strong>Year</strong><br>
                                     <input type="radio" name="year" value="1996"> 1996 <br>
                                     <input type="radio" name="year" value="2010"> 2010 <br>
                                 </td>
@@ -93,7 +103,7 @@
                         </table>
                     </div>
 				</td>
-				<td width="60%">
+				<td width="65%">
                     <div id="viewDiv"></div>
 				</td>
 				<td width="20%">
@@ -172,7 +182,7 @@
 						</table>
 					</div>
 						<div id="saveForm">
-							Name your query: <input type="text" name="queryName">  <input class="button" type="button" id="saveQuery" value="SAVE QUERY">
+							Name your query: <input type="text" id="qNameText" name="queryName">  <input class="button" type="button" id="saveQuery" value="SAVE QUERY">
 						</div>
 					</div>
 				</td>

@@ -145,6 +145,10 @@ require([
               index: 0
             });
 
+            function renderDropdown(){
+                //query the admin bounadries for a list of countries/cities and load them into dropdowns
+            }
+
         });
 
         function isInt(value) {
