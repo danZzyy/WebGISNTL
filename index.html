@@ -57,37 +57,60 @@
                             <tr>
 
                                 <div id="layerToggle">
-                                    <input type="checkbox" id="layer1"  checked> Radiance Calibrated 1996 Layer <br>
-                                    <input type="checkbox" id="layer2"  checked> Radiance Calibrated 2010 Layer <br>
-                                </div>
+                                    <input type="checkbox" id="layer1"  checked> RadCal 1996 Layer <br>
+                                    <input type="checkbox" id="layer2"  checked> RadCal 2010 Layer <br>
+                                </div><hr>
                             </tr>
                             <tr>
-                                <td><hr>
-                                	<strong>Brightness</strong><br>
+                            	<td>
+                            		<strong>Layer</strong><br>
+                            		<select id="layerSelect">
+                            			<option value="T0">1996</option>
+                            			<option value="T1">2010</option>
+                            		</select>
+                            	</td>
+                            </tr>
+                            <tr>
+                            	<td>
+                            		<strong>Extent</strong><br>
+                            		<select id="extent">
+                            		</select>
+                            	</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                	<strong>NTL Change</strong><br>
                                 	<span>
-	                                	<input type="radio" name="operator" value=">">	&#60; 
-	                                	<input type="radio" name="operator" value="<"> &#62; 
-	                                	<input type="radio" name="operator" value="="> &#61; &nbsp; &nbsp;
-	                                	<input type="number" name="bright" id="brightVal">
+	                                	<input type="radio" name="ntlOperator" value=">">	&#60; 
+	                                	<input type="radio" name="ntlOperator" value="<"> &#62; 
+	                                	<input type="radio" name="ntlOperator" value="="> &#61; &nbsp;
+	                                	<input type="number" name="ntlChg" id="chgVal">
 	                                </span>
                                 </td>
                             </tr>
                             <tr>
-                                <!-- filler for form -->
+                               	<td>
+                               		<strong>Area (km)</strong><br>
+                               		<span>
+	                                	<input type="radio" name="areaOperator" value=">">	&#60; 
+	                                	<input type="radio" name="areaOperator" value="<"> &#62; 
+	                                	<input type="radio" name="areaOperator" value="="> &#61; &nbsp;
+	                                	<input type="number" name="area" id="areaVal"> 
+	                                </span>
+                               	</td>
                             </tr>
                             <tr>
                                 <td>
-                                	
+                                	<strong>Status</strong><br>
+                                	<input type="radio" name="areaOperator" value="Found">Found<br>
+	                                	<input type="radio" name="status" value="Appear">Appear<br>
+	                                	<input type="radio" name="status" value="Disappear">Disappear<br>
+	                                	<input type="radio" name="status" value="Missed">Missed<br>
                                 </td>
                             </tr>
                             <tr>
                             </tr>
                             <tr>
-
-
-                            </tr>
-                            <tr>
-                                <td colspan="2"><hr></td>
                             </tr>
                             <tr>
                             	 <td colspan="1" align="center">

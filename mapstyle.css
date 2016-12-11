@@ -30,6 +30,7 @@ body {
     height: 47px;
 }
 #headerWrapper .h_Title {
+	font-size: 16pt;
     height: 47px;
     color: #333;
     margin: 15px 0 0 10px;
@@ -95,8 +96,12 @@ li {
 }
 
 #layersDiv {
-    width: 200px;
-    height: 400px;
+    width: 180px;
+    height: 250px;
+}
+
+#chgVal, #areaVal{
+	width: 40px;
 }
 /*
 #outerViewDiv {
@@ -109,7 +114,7 @@ li {
 }*/
 #viewDiv  {
 	width: 99%;
-	height: 99%;
+	height: 450px;
     min-width: 250px;
     min-height: 400px;
 	border: solid 1px; 

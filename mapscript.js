@@ -75,7 +75,25 @@ require([
                 visible: true
             });*/
 
-            checkExtentName = function (name) {
+            function runQuery(){
+                var l = document.getElementById("layerSelect");
+                var layerSelected = l.options[l.selectedIndex].value;
+                var query;
+                if(layerSelected == "T0"){
+                    //T0
+                    query = subsaharanT0.createQuery();
+                }
+                else{
+                    //T1
+                    query = subsaharanT1.createQuery();
+                }
+                var whereText = "";
+                var ext = document.getElementById("extent");
+                var extentSelected = ext.options[ext.selectedIndex].value;
+
+            }
+
+            function checkExtentName (name) {
               //Check if Extent has a defined name or is -1
               if (name != "-1") {
                 return name;
@@ -84,7 +102,7 @@ require([
               }
             }
 
-            checkStatusType = function (status) {
+            function checkStatusType (status) {
               //check Status and return appropriate context explanation
               console.log(status)
               switch (status) {
