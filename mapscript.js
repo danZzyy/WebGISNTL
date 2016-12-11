@@ -156,7 +156,20 @@ require([
               "\n The net change in NTL brightness DN is <b>" + ntlchange + "</b>";
             }*/
 
-
+            function displayResults(results) {
+                resultsLayer.removeAll();
+                var features = results.features.map(function(graphic) {
+                    graphic.symbol = new SimpleFillSymbol({
+                        style: "solid",
+                        color: "darkgray"
+                    });
+                    return graphic;
+                });
+                console.log(features);
+                var sum = features.length;
+                dom.byId("popDiv").innerHTML = "Urban Extents found: " + sum;
+                resultsLayer.addMany(features);
+            }
 
             var layer1Check = dom.byId("layer1");
             var layer2Check = dom.byId("layer2");
