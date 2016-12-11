@@ -2,6 +2,7 @@ require([
             "esri/Map",
             "esri/views/MapView",
             "esri/layers/FeatureLayer",
+            "esri/layers/ImageryLayer",
             "esri/widgets/Search",
             "esri/layers/GraphicsLayer",
             "esri/geometry/geometryEngine",
@@ -12,7 +13,13 @@ require([
             "dojo/dom",
             "dojo/dom-construct",
             "dojo/domReady!"
-        ], function(Map, MapView, FeatureLayer, Search, GraphicsLayer, geometryEngine, Graphic, SimpleFillSymbol, SimpleMarkerSymbol, on, dom, domconstruct) {
+        ], function(Map, MapView, FeatureLayer, ImageryLayer, Search, GraphicsLayer, geometryEngine, Graphic, SimpleFillSymbol, SimpleMarkerSymbol, on, dom, domconstruct) {
+
+            var rasterLayer = new ImageryLayer({
+              url: "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_NTL_DATA/MapServer/1",
+              format: "jpgpng" // server exports in either jpg or png format
+            });
+
             var subsaharanT0 ="https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_NTL_DATA/MapServer/4"
             var radcalT0Layer = new FeatureLayer({
                 url: subsaharanT0,
@@ -79,19 +86,19 @@ require([
                 visible: true
             });
 
-            function checkExtentName(value, key, data) {
+            checkExtentName = function (name) {
               //Check if Extent has a defined name or is -1
-              if (data.ExtentName != "-1") {
-                return data.ExtentName;
+              if (name != "-1") {
+                return name;
               } else {
-                return "This Urban Extent";
+                return "This Urban Extent"
               }
             }
 
-            function checkStatusType(value, key, data) {
+            checkStatusType = function (status) {
               //check Status and return appropriate context explanation
-              console.log(data.Status);
-              switch (data.Status) {
+              console.log(status)
+              switch (status) {
                 case "FOUND":
                   context = "intersects cities in both 1996 and 2010.";
                   break;
@@ -119,9 +126,39 @@ require([
                 zoom: 7, // Sets the zoom level based on level of detail (LOD)
                 center: [8.0, 6.0]
             });
+
+            view.on("click", function(evt) {
+              var screenPoint = evt.screenPoint;
+
+              view.hitTest(screenPoint)
+                .then(getGraphics);
+            });
+
+            function getGraphics(response) {
+              var graphic = response.results[0].graphic;
+              var attributes = graphic.attributes;
+              var extentName = checkExtentName(attributes.ExtentName);
+              var areaChange = attributes.areaChg;
+              var area = attribute.gAreaKM;
+              var statuscontext = checkStatusType(attributes.Status);
+              var status = attributes.Status;
+              var ntlchange = attribute.ntlChange;
+              var cityCount = attributes.CtyCntT0;
+              var extentType = attributes.ExtTypeT0;
+
+              dom.byId("popupDiv").innerHTML = "</b>" + extentName + "</b> has an area of <b>" + area  + "KM</b>, with a net area change of <b>" +
+              areaChange + " KM</b>. " +
+              "This urban extent was </b>" + status + "</b> which means that it " + statuscontext +
+              "There are <b>" + cityCount + "</b> cities in this <b>" + extentType + "</b> type urban extent." +
+              "\n The net change in NTL brightness DN is <b>" + ntlchange + "</b>";
+            }
+
+
+
             var layer1Check = dom.byId("layer1");
             var layer2Check = dom.byId("layer2");
             var layer3Check = dom.byId("layer3");
+            var layer4Check = dom.byId("layer4");
 
             on(layer1Check, "change", function(){
                 radcalT0Layer.visible = layer1Check.checked;
@@ -133,6 +170,10 @@ require([
 
             on(layer3Check, "change", function(){
                 NTLFPLayer.visible = layer3Check.checked;
+            })
+
+            on(layer4Check, "change", function(){
+                rasterLayer.visible = layer4Check.checked;
             })
 
             var searchWidget = new Search({
