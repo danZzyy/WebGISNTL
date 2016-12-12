@@ -19,6 +19,11 @@ require([
                 popupTemplate: {
                   title: "Radiance Calibrated NTL Urban Extent in 1996",
                   content: [{
+                    type: "text",
+                    text: "</b>{ExtentName:checkExtentName}</b> has an area of <b>{gAreaKM:NumberFormat} kilometers</b>. " +
+                    "This urban extent was " + "</b>{Status}</b> which means that it {Status:checkStatusType}" +
+                    "There are <b>{CtyCntT0}</b> cities in this <b>{ExtTypeT0}</b> type urban extent."
+                  }, {
                     type: "media",
                     mediaInfos: [{
                       title: "<b>RC Values 1996-2010<b>",
@@ -43,6 +48,12 @@ require([
                 popupTemplate: {
                   title: "Radiance Calibrated NTL Urban Extent in 2010",
                   content: [{
+                    type: "text",
+                    text: "</b>{ExtentName:checkExtentName}</b> has an area of <b>{gAreaKM:NumberFormat} KM</b>, with a net area change of <b>{areaChg:NumberFormat} KM</b>. " +
+                    "This urban extent was " + "</b>{Status}</b> which means that it {Status:checkStatusType}" +
+                    "There are <b>{CtyCntT0}</b> cities in this <b>{ExtTypeT0}</b> type urban extent." +
+                    "\n The net change in NTL brightness DN is <b>{ntlChange:NumberFormat}</b>"
+                  }, {
                     type: "media",
                     mediaInfos: [{
                       title: "<b>RC Values 1996-2010<b>",
@@ -61,7 +72,15 @@ require([
                 visible: true
             });
 
-           function anyRadioChecked(radio){
+   /*var subsaharanNTLFP = "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_NTL_DATA/MapServer/2"
+            var NTLFPLayer = new FeatureLayer({
+                url: subsaharanNTLFP,
+                outFields: ["*"],
+                visible: true
+            });*/
+
+
+            function anyRadioChecked(radio){
                 for(var n = 0; n < radio.length; n ++){
                     if(radio[n].checked){
                         return true;
@@ -77,8 +96,6 @@ require([
                     }
                 }
             }
-<<<<<<< HEAD
-            
             /**
              * runQuery() 
              *  
@@ -90,12 +107,10 @@ require([
              * RETURN VALUE:
              *  A feature layer of the queried results.
              */ 
-=======
             // last query run
             var lastQuery = "";
 
             var savedQueries = [];
->>>>>>> master
             function runQuery(){
                 var l = document.getElementById("layerSelect");
                 var layerSelected = l.options[l.selectedIndex].value;
@@ -143,7 +158,7 @@ require([
                     if(whereLength > 1){
                         whereText += " AND ";
                     }
-                    whereText += " Status = \'" + getRadioSelected(stat) + "\'"; 
+                    whereText += " Status = \'" + getRadioSelected(stat) + "\'";
                 }
                 alert(whereText);
                 query.where = whereText;
@@ -208,6 +223,7 @@ require([
                 runQuery().then(dispQuery);
             });
 
+
             //GraphicsLayer for displaying results
             var resultsLayer = new GraphicsLayer();
 
@@ -246,8 +262,11 @@ require([
             })
             */
 
+            /*
+            //Code to select feature on click and populate PopDiv with some info about the feature
             view.on("click", function(evt) {
               var screenPoint = evt.screenPoint;
+              window.alert("clicked");
 
               view.hitTest(screenPoint)
                 .then(getGraphics);
@@ -265,12 +284,49 @@ require([
               var cityCount = attributes.CtyCntT0;
               var extentType = attributes.ExtTypeT0;
 
-              dom.byId("popupDiv").innerHTML = "</b>" + extentName + "</b> has an area of <b>" + area  + "KM</b>, with a net area change of <b>" +
+              dom.byId("popupDiv").innerHTML = "<b>" + extentName + "</b> has an area of <b>" + area  + "KM</b>, with a net area change of <b>" +
               areaChange + " KM</b>. " +
               "This urban extent was </b>" + _status + "</b> which means that it " + statuscontext +
+
               "There are <b>" + cityCount + "</b> cities in this <b>" + extentType + "</b> type urban extent." +
               "\n The net change in NTL brightness DN is <b>" + ntlchange + "</b>";
+            }*/
+
+            function displayResults(results) {
+                resultsLayer.removeAll();
+                var features = results.features.map(function(graphic) {
+                    graphic.symbol = new SimpleFillSymbol({
+                        style: "solid",
+                        color: "darkgray"
+                    });
+                    return graphic;
+                });
+                console.log(features);
+                var sum = features.length;
+                dom.byId("popDiv").innerHTML = "Urban Extents found: " + sum;
+                resultsLayer.addMany(features);
             }
+
+            var layer1Check = dom.byId("layer1");
+            var layer2Check = dom.byId("layer2");
+
+
+
+            var layer1Check = document.getElementById("layer1");
+            var layer2Check = document.getElementById("layer2");
+
+            var queryButton = document.getElementById("queryBtn");
+
+
+            layer1Check.onchange = function(){
+                radcalT0Layer.visible = layer1Check.checked;
+            };
+
+            layer2Check.onchange = function(){
+                radcalT1Layer.visible = layer2Check.checked;
+            };
+
+            queryButton.onclick = function(){ runQuery(); };
 
             // Defining and adding search widget
             var searchWidget = new Search({
