@@ -92,7 +92,18 @@ require([
                     }
                 }
             }
-
+            
+            /**
+             * runQuery() 
+             *  
+             * DESC:
+             *  Runs down the query parameters on the left panel and builds a 
+             *  queriable string from the options specified by the user. 
+             *  Returns a queried feature layer from the parsed query string.
+             *
+             * RETURN VALUE:
+             *  A feature layer of the queried results.
+             */ 
             function runQuery(){
                 var l = document.getElementById("layerSelect");
                 var layerSelected = l.options[l.selectedIndex].value;
@@ -173,6 +184,37 @@ require([
               return context;
             }
 
+            /**
+             * dispQuery()
+             *
+             * DESC:
+             *  Takes in a featurelayer as a param (expected to be called
+             *  with some query result being passed in).
+             *  
+             *  All layers are removed from the map, and the passed in 
+             *  feature layer is displayed instead.
+             *
+             * RETURN VALUE:
+             *  None
+             */
+            function dispQuery(results) {
+                resultsLayer.removeAll();
+                var features = results.features.map(function(graphic) {
+                    graphic.symbol = new SimpleFillSymbol({
+                        style: "solid",
+                        color: "purple"
+                    });
+                    return graphic;
+                });
+
+                resultsLayer.addMany(features);
+                map.addLayer(resultsLayer);
+            }
+            
+            // Defining behavior for the Query Button
+            on(dom.byId("queryBtn"), "click", function() {
+                runQuery().then(dispQuery);
+            });
 
             //GraphicsLayer for displaying results
             var resultsLayer = new GraphicsLayer();
@@ -215,8 +257,6 @@ require([
               "\n The net change in NTL brightness DN is <b>" + ntlchange + "</b>";
             }
 
-
-
             var layer1Check = document.getElementById("layer1");
             var layer2Check = document.getElementById("layer2");
 
@@ -230,7 +270,9 @@ require([
                 radcalT1Layer.visible = layer2Check.checked;
             };
 
-            queryButton.onclick = function(){ runQuery(); };
+            queryButton.onclick = function() { 
+                dispQuery(runQuery()); 
+            };
             
             // Defining and adding search widget
             var searchWidget = new Search({
