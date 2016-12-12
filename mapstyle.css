@@ -9,10 +9,9 @@ body {
 
 #headerWrapper {
     width: 96%;
-    height: 85px;
+    height: 100px;
     margin-left: 2%;
     margin-right: 2%;
-    margin-bottom: 16px;
 }
 #headerWrapper .headerContainer {
     height: 100%;
@@ -40,16 +39,29 @@ body {
     vertical-align: 17px;
 }
 
+#headerWrapper .h_socialIcons {
+    display: block;
+    float: right;
+    border: 1px solid #DEDEDE;
+    height: 30px;
+    width: 200px;
+    margin-right: 120px;
+    padding-top: 1px;
+}
+
+#headerWrapper .h_socialIcons img {
+    height: 20px;
+    width: 20px;
+    vertical-align: baseline;
+    padding: 5px;
+}
+
 #headerWrapper .nav {
     width: 96%;
     min-width: 975px;
     height: 30%;
     /*padding-left: 10px;*/
     text-align: center;
-}
-
-#headerWrapper .nav li {
-    white-space: nowrap;
 }
 
 #headerWrapper .nav li a {
@@ -70,7 +82,7 @@ body {
     border: none;
     height: 2px;
     background-color: #D6D6D6;
-    margin: 0;
+    margin-top: 1px;
     padding-top: 0;
 }
 
@@ -97,7 +109,6 @@ a {
 }
 li {
 	display: inline;
-	margin-right: 20px;
 }
 
 #toolRibbonDiv {

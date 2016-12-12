@@ -2,26 +2,18 @@ require([
             "esri/Map",
             "esri/views/MapView",
             "esri/layers/FeatureLayer",
-            "esri/layers/ImageryLayer",
             "esri/widgets/Search",
-            "esri/widgets/Home",
             "esri/layers/GraphicsLayer",
             "esri/geometry/geometryEngine",
             "esri/Graphic",
             "esri/symbols/SimpleFillSymbol",
             "esri/symbols/SimpleMarkerSymbol",
-            "dojo/dom",
             "dojo/on",
+            "dojo/dom",
             "dojo/dom-construct",
             "dojo/domReady!"
-        ], function(Map, MapView, FeatureLayer, ImageryLayer, Search, GraphicsLayer, geometryEngine, Graphic, SimpleFillSymbol, SimpleMarkerSymbol, on, dom, domconstruct) {
-
-            /*var rasterLayer = new ImageryLayer({
-              url: "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_NTL_DATA/MapServer/1",
-              format: "jpgpng" // server exports in either jpg or png format
-            });*/
-
-            var subsaharanT0 ="https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/Endres_All_Footprints_And_Boundaries/MapServer/16"
+        ], function(Map, MapView, FeatureLayer, Search, GraphicsLayer, geometryEngine, Graphic, SimpleFillSymbol, SimpleMarkerSymbol, on, dom, domconstruct) {
+           var subsaharanT0 ="https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/Endres_All_Footprints_And_Boundaries/MapServer/16"
             var radcalT0Layer = new FeatureLayer({
                 url: subsaharanT0,
                 popupTemplate: {
@@ -80,37 +72,12 @@ require([
                 visible: true
             });
 
-            /*var subsaharanNTLFP = "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_NTL_DATA/MapServer/2"
+   /*var subsaharanNTLFP = "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_NTL_DATA/MapServer/2"
             var NTLFPLayer = new FeatureLayer({
                 url: subsaharanNTLFP,
                 outFields: ["*"],
                 visible: true
             });*/
-
-            checkExtentName = function (value, key, data) {
-              //Check if Extent has a defined name or is -1
-              if (data.ExtentName != "-1") {
-                return data.ExtentName;
-              } else {
-                return "This Urban Extent"
-              }
-            }
-
-            checkStatusType = function (value, key, data) {
-              //check Status and return appropriate context explanation
-              console.log(data.Status)
-              switch (data.Status) {
-                case "FOUND":
-                  context = "intersects cities in both 1996 and 2010.";
-                  break;
-                case "MISSED":
-                  context = "does not intersect any cities.";
-                  break;
-                case "APPEAR":
-                  context = "intersects extent only in 2010.";
-              }
-              return context;
-            }
 
 
             function anyRadioChecked(radio){
@@ -129,7 +96,21 @@ require([
                     }
                 }
             }
+            /**
+             * runQuery() 
+             *  
+             * DESC:
+             *  Runs down the query parameters on the left panel and builds a 
+             *  queriable string from the options specified by the user. 
+             *  Returns a queried feature layer from the parsed query string.
+             *
+             * RETURN VALUE:
+             *  A feature layer of the queried results.
+             */ 
+            // last query run
+            var lastQuery = "";
 
+            var savedQueries = [];
             function runQuery(){
                 var l = document.getElementById("layerSelect");
                 var layerSelected = l.options[l.selectedIndex].value;
@@ -158,7 +139,7 @@ require([
                     if(whereLength > 1){
                         whereText += " AND ";
                     }
-                    whereText += " ntlChnCorr " + getRadioSelected(ntlOp) + " " + ntlVal;
+                    whereText += " ntlChgCorr " + getRadioSelected(ntlOp) + " " + ntlVal;
                 }
 
                 var arOp = document.getElementsByName("areaOperator");
@@ -181,9 +162,66 @@ require([
                 }
                 alert(whereText);
                 query.where = whereText;
+                lastQuery  = whereText;
 
                 return qlayer.queryFeatures(query);
+            } 
+
+            function checkExtentName (name) {
+              //Check if Extent has a defined name or is -1
+              if (name != "-1") {
+                return name;
+              } else {
+                return "This Urban Extent"
+              }
             }
+
+            function checkStatusType (status) {
+              //check Status and return appropriate context explanation
+              console.log(status)
+              switch (status) {
+                case "FOUND":
+                  context = "intersects cities in both 1996 and 2010.";
+                  break;
+                case "MISSED":
+                  context = "does not intersect any cities.";
+                  break;
+                case "APPEAR":
+                  context = "intersects extent only in 2010.";
+              }
+              return context;
+            }
+
+            /**
+             * dispQuery()
+             *
+             * DESC:
+             *  Takes in a featurelayer as a param (expected to be called
+             *  with some query result being passed in).
+             *  
+             *  All layers are removed from the map, and the passed in 
+             *  feature layer is displayed instead.
+             *
+             * RETURN VALUE:
+             *  None
+             */
+            function dispQuery(results) {
+                resultsLayer.removeAll();
+                var features = results.features.map(function(graphic) {
+                    graphic.symbol = new SimpleFillSymbol({
+                        style: "solid",
+                        color: "purple"
+                    });
+                    return graphic;
+                });
+
+                resultsLayer.addMany(features);
+            }
+
+            //Defining behavior for the Query Button
+            on(dom.byId("queryBtn"), "click", function() {
+                runQuery().then(dispQuery);
+            });
 
 
             //GraphicsLayer for displaying results
@@ -191,7 +229,7 @@ require([
 
             var map = new Map({
                 basemap: "hybrid",
-                layers: [radcalT0Layer, radcalT1Layer]
+                layers: [radcalT0Layer, radcalT1Layer, resultsLayer]
             });
 
             var view = new MapView({
@@ -200,6 +238,29 @@ require([
                 zoom: 7, // Sets the zoom level based on level of detail (LOD)
                 center: [8.0, 6.0]
             });
+
+            var layer1Check = dom.byId("layer1");
+            var layer2Check = dom.byId("layer2");
+            var queryButton = dom.byId("queryBtn");
+            // var layer3Check = dom.byId("layer3");
+
+            on(layer1Check, "change", function(){
+                radcalT0Layer.visible = layer1Check.checked;
+            })
+
+            on(layer2Check, "change", function(){
+                radcalT1Layer.visible = layer2Check.checked;
+            })
+
+            on(queryButton, "click", function() {
+                runQuery().then(dispQuery);
+            });
+
+            /*
+            on(layer3Check, "change", function(){
+                NTLFPLayer.visible = layer3Check.checked;
+            })
+            */
 
             /*
             //Code to select feature on click and populate PopDiv with some info about the feature
@@ -218,14 +279,15 @@ require([
               var areaChange = attributes.areaChg;
               var area = attribute.gAreaKM;
               var statuscontext = checkStatusType(attributes.Status);
-              var status = attributes.Status;
+              var _status = attributes.Status;
               var ntlchange = attribute.ntlChange;
               var cityCount = attributes.CtyCntT0;
               var extentType = attributes.ExtTypeT0;
 
               dom.byId("popupDiv").innerHTML = "<b>" + extentName + "</b> has an area of <b>" + area  + "KM</b>, with a net area change of <b>" +
               areaChange + " KM</b>. " +
-              "This urban extent was <b>" + status + "</b> which means that it " + statuscontext +
+              "This urban extent was </b>" + _status + "</b> which means that it " + statuscontext +
+
               "There are <b>" + cityCount + "</b> cities in this <b>" + extentType + "</b> type urban extent." +
               "\n The net change in NTL brightness DN is <b>" + ntlchange + "</b>";
             }*/
@@ -276,17 +338,15 @@ require([
               position: "top-right",
               index: 0
             });
-
-            function renderDropdown(){
-                //query the admin bounadries for a list of countries/cities and load them into dropdowns
-            }
+            
 
         });
 
-function isInt(value) {
-    if (isNaN(value)) {
-        return false;
-    }
-    var x = parseFloat(value);
-    return (x | 0) === x;
-}
+        function isInt(value) {
+            if (isNaN(value)) {
+                return false;
+            }
+            var x = parseFloat(value);
+            return (x | 0) === x;
+        }
+
