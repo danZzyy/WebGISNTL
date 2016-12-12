@@ -111,6 +111,7 @@ require([
             var lastQuery = "";
 
             var savedQueries = [];
+
             function runQuery(){
                 var l = document.getElementById("layerSelect");
                 var layerSelected = l.options[l.selectedIndex].value;
@@ -218,12 +219,49 @@ require([
                 resultsLayer.addMany(features);
             }
 
-            //Defining behavior for the Query Button
-            on(dom.byId("queryBtn"), "click", function() {
-                runQuery().then(dispQuery);
-            });
+            function saveQuery(){
+                var qName = dom.byId("qNameText").value;
+                if(qName == ""){
+                    alert("You must name your query");
+                }
+                if(lastQuery != ""){
+                    var namedQuery = {name: qName, query: lastQuery};
+                    savedQueries.push(namedQuery);
+                    renderQuerySelection();
+                }
+            }
 
+            function renderQuerySelection(){
+                var savedSelect = document.getElementById("savedQueries");
+                var qName = savedQueries[savedQueries.length - 1].name;
+                var option = document.createElement("option");
+                option.text = qName;
+                savedSelect.add(option);
+            }
 
+            function updateSelectedQueryText(){
+                var qText = document.getElementById("savedQueryText");
+                var savedSelectOptions = document.getElementById("savedQueries").options;
+                var selected = -1;
+                for(var i = 0; i < savedSelectOptions.length; i++){
+                    if(savedSelectOptions[i].selected){
+                        selected = i;
+                        break;
+                    }
+                }
+                if(selected == -1){
+                    qText.innerHTML = "";
+                }
+                else{
+                    qText.innerHTML = savedQueries[selected].query;
+                }
+                return selected;
+            }
+
+            function rerunQuery(selected){
+                var queryWhere = savedQueries[selected].query;
+                //finish this, save which layer is queried
+            }
             //GraphicsLayer for displaying results
             var resultsLayer = new GraphicsLayer();
 
@@ -242,6 +280,9 @@ require([
             var layer1Check = dom.byId("layer1");
             var layer2Check = dom.byId("layer2");
             var queryButton = dom.byId("queryBtn");
+            var qSaveButton = dom.byId("saveQuery");
+            var rerunButton = dom.byId("rerunQuery");
+            var savedQuerySelect = dom.byId("savedQueries");
             // var layer3Check = dom.byId("layer3");
 
             on(layer1Check, "change", function(){
@@ -256,6 +297,20 @@ require([
                 runQuery().then(dispQuery);
             });
 
+            on(qSaveButton, "click", function() {
+                saveQuery();
+            });
+
+            on(rerunButton, "click", function() {
+                var selected = updateSelectedQueryText();
+                if(selected != -1){
+                    rerunQuery(selected);   
+                }
+            })
+
+            on(savedQuerySelect, "change", function(){
+                updateSelectedQueryText();
+            });
             /*
             on(layer3Check, "change", function(){
                 NTLFPLayer.visible = layer3Check.checked;
