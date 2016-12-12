@@ -94,19 +94,18 @@ require([
                 center: [8.0, 6.0]
             });
 
-            function checkExtentName (name) {
+            checkExtentName = function (value, key, data) {
               //Check if Extent has a defined name or is -1
-              if (name != "-1") {
-                return name;
+              if (data.ExtentName != "-1") {
+                return data.ExtentName;
               } else {
                 return "This Urban Extent"
               }
             }
 
-            function checkStatusType (status) {
+            checkStatusType = function (value, key, data) {
               //check Status and return appropriate context explanation
-              console.log(status)
-              switch (status) {
+              switch (data.Status) {
                 case "FOUND":
                   context = "intersects cities in both 1996 and 2010.";
                   break;
