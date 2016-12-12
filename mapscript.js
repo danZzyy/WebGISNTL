@@ -79,6 +79,45 @@ require([
                 visible: true
             });*/
 
+            //GraphicsLayer for displaying results
+            var resultsLayer = new GraphicsLayer();
+
+            var map = new Map({
+                basemap: "hybrid",
+                layers: [radcalT0Layer, radcalT1Layer, resultsLayer]
+            });
+
+            var view = new MapView({
+                container: "viewDiv", // Reference to the scene div with id viewDiv
+                map: map, //Reference to the map object created before the scene
+                zoom: 7, // Sets the zoom level based on level of detail (LOD)
+                center: [8.0, 6.0]
+            });
+
+            function checkExtentName (name) {
+              //Check if Extent has a defined name or is -1
+              if (name != "-1") {
+                return name;
+              } else {
+                return "This Urban Extent"
+              }
+            }
+
+            function checkStatusType (status) {
+              //check Status and return appropriate context explanation
+              console.log(status)
+              switch (status) {
+                case "FOUND":
+                  context = "intersects cities in both 1996 and 2010.";
+                  break;
+                case "MISSED":
+                  context = "does not intersect any cities.";
+                  break;
+                case "APPEAR":
+                  context = "intersects extent only in 2010.";
+              }
+              return context;
+            }
 
             function anyRadioChecked(radio){
                 for(var n = 0; n < radio.length; n ++){
@@ -96,17 +135,18 @@ require([
                     }
                 }
             }
+
             /**
-             * runQuery() 
-             *  
+             * runQuery()
+             *
              * DESC:
-             *  Runs down the query parameters on the left panel and builds a 
-             *  queriable string from the options specified by the user. 
+             *  Runs down the query parameters on the left panel and builds a
+             *  queriable string from the options specified by the user.
              *  Returns a queried feature layer from the parsed query string.
              *
              * RETURN VALUE:
              *  A feature layer of the queried results.
-             */ 
+             */
             // last query run
             var lastQuery = "";
 
@@ -166,31 +206,6 @@ require([
                 lastQuery  = whereText;
 
                 return qlayer.queryFeatures(query);
-            } 
-
-            function checkExtentName (name) {
-              //Check if Extent has a defined name or is -1
-              if (name != "-1") {
-                return name;
-              } else {
-                return "This Urban Extent"
-              }
-            }
-
-            function checkStatusType (status) {
-              //check Status and return appropriate context explanation
-              console.log(status)
-              switch (status) {
-                case "FOUND":
-                  context = "intersects cities in both 1996 and 2010.";
-                  break;
-                case "MISSED":
-                  context = "does not intersect any cities.";
-                  break;
-                case "APPEAR":
-                  context = "intersects extent only in 2010.";
-              }
-              return context;
             }
 
             /**
@@ -199,8 +214,8 @@ require([
              * DESC:
              *  Takes in a featurelayer as a param (expected to be called
              *  with some query result being passed in).
-             *  
-             *  All layers are removed from the map, and the passed in 
+             *
+             *  All layers are removed from the map, and the passed in
              *  feature layer is displayed instead.
              *
              * RETURN VALUE:
@@ -215,7 +230,9 @@ require([
                     });
                     return graphic;
                 });
-
+                var sum = features.length;
+                console.log(sum);
+                dom.byId("popDiv").innerHTML = "Urban Extents found: " + sum;
                 resultsLayer.addMany(features);
             }
 
@@ -347,42 +364,6 @@ require([
               "\n The net change in NTL brightness DN is <b>" + ntlchange + "</b>";
             }*/
 
-            function displayResults(results) {
-                resultsLayer.removeAll();
-                var features = results.features.map(function(graphic) {
-                    graphic.symbol = new SimpleFillSymbol({
-                        style: "solid",
-                        color: "darkgray"
-                    });
-                    return graphic;
-                });
-                console.log(features);
-                var sum = features.length;
-                dom.byId("popDiv").innerHTML = "Urban Extents found: " + sum;
-                resultsLayer.addMany(features);
-            }
-
-            var layer1Check = dom.byId("layer1");
-            var layer2Check = dom.byId("layer2");
-
-
-
-            var layer1Check = document.getElementById("layer1");
-            var layer2Check = document.getElementById("layer2");
-
-            var queryButton = document.getElementById("queryBtn");
-
-
-            layer1Check.onchange = function(){
-                radcalT0Layer.visible = layer1Check.checked;
-            };
-
-            layer2Check.onchange = function(){
-                radcalT1Layer.visible = layer2Check.checked;
-            };
-
-            queryButton.onclick = function(){ runQuery(); };
-
             // Defining and adding search widget
             var searchWidget = new Search({
               view: view
@@ -393,7 +374,7 @@ require([
               position: "top-right",
               index: 0
             });
-            
+
 
         });
 
@@ -404,4 +385,3 @@ require([
             var x = parseFloat(value);
             return (x | 0) === x;
         }
-
