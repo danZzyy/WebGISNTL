@@ -2,26 +2,18 @@ require([
             "esri/Map",
             "esri/views/MapView",
             "esri/layers/FeatureLayer",
-            "esri/layers/ImageryLayer",
             "esri/widgets/Search",
-            "esri/widgets/Home",
             "esri/layers/GraphicsLayer",
             "esri/geometry/geometryEngine",
             "esri/Graphic",
             "esri/symbols/SimpleFillSymbol",
             "esri/symbols/SimpleMarkerSymbol",
-            "dojo/dom",
             "dojo/on",
+            "dojo/dom",
             "dojo/dom-construct",
             "dojo/domReady!"
-        ], function(Map, MapView, FeatureLayer, ImageryLayer, Search, GraphicsLayer, geometryEngine, Graphic, SimpleFillSymbol, SimpleMarkerSymbol, on, dom, domconstruct) {
-
-            /*var rasterLayer = new ImageryLayer({
-              url: "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_NTL_DATA/MapServer/1",
-              format: "jpgpng" // server exports in either jpg or png format
-            });*/
-
-            var subsaharanT0 ="https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/Endres_All_Footprints_And_Boundaries/MapServer/16"
+        ], function(Map, MapView, FeatureLayer, Search, GraphicsLayer, geometryEngine, Graphic, SimpleFillSymbol, SimpleMarkerSymbol, on, dom, domconstruct) {
+           var subsaharanT0 ="https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/Endres_All_Footprints_And_Boundaries/MapServer/16"
             var radcalT0Layer = new FeatureLayer({
                 url: subsaharanT0,
                 popupTemplate: {
@@ -69,14 +61,7 @@ require([
                 visible: true
             });
 
-            /*var subsaharanNTLFP = "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_NTL_DATA/MapServer/2"
-            var NTLFPLayer = new FeatureLayer({
-                url: subsaharanNTLFP,
-                outFields: ["*"],
-                visible: true
-            });*/
-
-            function anyRadioChecked(radio){
+           function anyRadioChecked(radio){
                 for(var n = 0; n < radio.length; n ++){
                     if(radio[n].checked){
                         return true;
@@ -132,7 +117,7 @@ require([
                     if(whereLength > 1){
                         whereText += " AND ";
                     }
-                    whereText += " ntlChnCorr " + getRadioSelected(ntlOp) + " " + ntlVal;
+                    whereText += " ntlChgCorr " + getRadioSelected(ntlOp) + " " + ntlVal;
                 }
 
                 var arOp = document.getElementsByName("areaOperator");
@@ -157,7 +142,7 @@ require([
                 query.where = whereText;
 
                 return qlayer.queryFeatures(query);
-            }
+            } 
 
             function checkExtentName (name) {
               //Check if Extent has a defined name or is -1
@@ -208,10 +193,9 @@ require([
                 });
 
                 resultsLayer.addMany(features);
-                map.addLayer(resultsLayer);
             }
-            
-            // Defining behavior for the Query Button
+
+            //Defining behavior for the Query Button
             on(dom.byId("queryBtn"), "click", function() {
                 runQuery().then(dispQuery);
             });
@@ -221,7 +205,7 @@ require([
 
             var map = new Map({
                 basemap: "hybrid",
-                layers: [radcalT0Layer, radcalT1Layer]
+                layers: [radcalT0Layer, radcalT1Layer, resultsLayer]
             });
 
             var view = new MapView({
@@ -230,6 +214,29 @@ require([
                 zoom: 7, // Sets the zoom level based on level of detail (LOD)
                 center: [8.0, 6.0]
             });
+
+            var layer1Check = dom.byId("layer1");
+            var layer2Check = dom.byId("layer2");
+            var queryButton = dom.byId("queryBtn");
+            // var layer3Check = dom.byId("layer3");
+
+            on(layer1Check, "change", function(){
+                radcalT0Layer.visible = layer1Check.checked;
+            })
+
+            on(layer2Check, "change", function(){
+                radcalT1Layer.visible = layer2Check.checked;
+            })
+
+            on(queryButton, "click", function() {
+                runQuery().then(dispQuery);
+            });
+
+            /*
+            on(layer3Check, "change", function(){
+                NTLFPLayer.visible = layer3Check.checked;
+            })
+            */
 
             view.on("click", function(evt) {
               var screenPoint = evt.screenPoint;
@@ -245,35 +252,18 @@ require([
               var areaChange = attributes.areaChg;
               var area = attribute.gAreaKM;
               var statuscontext = checkStatusType(attributes.Status);
-              var status = attributes.Status;
+              var _status = attributes.Status;
               var ntlchange = attribute.ntlChange;
               var cityCount = attributes.CtyCntT0;
               var extentType = attributes.ExtTypeT0;
 
               dom.byId("popupDiv").innerHTML = "</b>" + extentName + "</b> has an area of <b>" + area  + "KM</b>, with a net area change of <b>" +
               areaChange + " KM</b>. " +
-              "This urban extent was </b>" + status + "</b> which means that it " + statuscontext +
+              "This urban extent was </b>" + _status + "</b> which means that it " + statuscontext +
               "There are <b>" + cityCount + "</b> cities in this <b>" + extentType + "</b> type urban extent." +
               "\n The net change in NTL brightness DN is <b>" + ntlchange + "</b>";
             }
 
-            var layer1Check = document.getElementById("layer1");
-            var layer2Check = document.getElementById("layer2");
-
-            var queryButton = document.getElementById("queryBtn");
-
-            layer1Check.onchange = function(){
-                radcalT0Layer.visible = layer1Check.checked;
-            };
-
-            layer2Check.onchange = function(){
-                radcalT1Layer.visible = layer2Check.checked;
-            };
-
-            queryButton.onclick = function() { 
-                dispQuery(runQuery()); 
-            };
-            
             // Defining and adding search widget
             var searchWidget = new Search({
               view: view
@@ -284,17 +274,15 @@ require([
               position: "top-right",
               index: 0
             });
-
-            function renderDropdown(){
-                //query the admin bounadries for a list of countries/cities and load them into dropdowns
-            }
+            
 
         });
 
-function isInt(value) {
-    if (isNaN(value)) {
-        return false;
-    }
-    var x = parseFloat(value);
-    return (x | 0) === x;
-}
+        function isInt(value) {
+            if (isNaN(value)) {
+                return false;
+            }
+            var x = parseFloat(value);
+            return (x | 0) === x;
+        }
+
