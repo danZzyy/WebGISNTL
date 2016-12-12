@@ -149,8 +149,10 @@
 				<td width="20%">
 					<div id="savedDiv">
                         <h4 align="center">Saved Queries</h4>
-                        <select name="savedQueries" multiple>
+                        <select id="savedQueries" multiple>
+
                         </select>
+                        <div id="savedQueryText"></div>
 					</div>
 					<input class="button" type="button" id="rerunQuery" value="RUN QUERY AGAIN">
 				</td>
@@ -159,42 +161,6 @@
 				<td colspan="2">
 					<div id="result">
 						<h4 id="resultHeader">Results<h4>
-						<table id="resultTable">
-							<thead>
-								<tr>
-									<td>Attr 1</td>
-									<td>Attr 2</td>
-									<td>Attr 3</td>
-									<td>Attr 4</td>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>-</td>
-									<td>-</td>
-									<td>-</td>
-									<td>-</td>
-								</tr>
-								<tr>
-									<td>-</td>
-									<td>-</td>
-									<td>-</td>
-									<td>-</td>
-								</tr>
-								<tr>
-									<td>-</td>
-									<td>-</td>
-									<td>-</td>
-									<td>-</td>
-								</tr>
-								<tr>
-									<td>-</td>
-									<td>-</td>
-									<td>-</td>
-									<td>-</td>
-								</tr>
-							</tbody>
-						</table>
 					</div>
 						<div id="saveForm">
 							Name your query: <input type="text" id="qNameText" name="queryName">  <input class="button" type="button" id="saveQuery" value="SAVE QUERY">

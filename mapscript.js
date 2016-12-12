@@ -136,11 +136,6 @@ require([
                 }
             }
 
-            //Defining behavior for the Query Button
-            on(dom.byId("queryBtn"), "click", function() {
-                runQuery().then(dispQuery);
-            });
-
             /**
              * runQuery()
              *
@@ -156,6 +151,7 @@ require([
             var lastQuery = "";
 
             var savedQueries = [];
+
             function runQuery(){
                 var l = document.getElementById("layerSelect");
                 var layerSelected = l.options[l.selectedIndex].value;
@@ -240,9 +236,70 @@ require([
                 resultsLayer.addMany(features);
             }
 
+            function saveQuery(){
+                var qName = dom.byId("qNameText").value;
+                if(qName == ""){
+                    alert("You must name your query");
+                }
+                if(lastQuery != ""){
+                    var namedQuery = {name: qName, query: lastQuery};
+                    savedQueries.push(namedQuery);
+                    renderQuerySelection();
+                }
+            }
+
+            function renderQuerySelection(){
+                var savedSelect = document.getElementById("savedQueries");
+                var qName = savedQueries[savedQueries.length - 1].name;
+                var option = document.createElement("option");
+                option.text = qName;
+                savedSelect.add(option);
+            }
+
+            function updateSelectedQueryText(){
+                var qText = document.getElementById("savedQueryText");
+                var savedSelectOptions = document.getElementById("savedQueries").options;
+                var selected = -1;
+                for(var i = 0; i < savedSelectOptions.length; i++){
+                    if(savedSelectOptions[i].selected){
+                        selected = i;
+                        break;
+                    }
+                }
+                if(selected == -1){
+                    qText.innerHTML = "";
+                }
+                else{
+                    qText.innerHTML = savedQueries[selected].query;
+                }
+                return selected;
+            }
+
+            function rerunQuery(selected){
+                var queryWhere = savedQueries[selected].query;
+                //finish this, save which layer is queried
+            }
+            //GraphicsLayer for displaying results
+            var resultsLayer = new GraphicsLayer();
+
+            var map = new Map({
+                basemap: "hybrid",
+                layers: [radcalT0Layer, radcalT1Layer, resultsLayer]
+            });
+
+            var view = new MapView({
+                container: "viewDiv", // Reference to the scene div with id viewDiv
+                map: map, //Reference to the map object created before the scene
+                zoom: 7, // Sets the zoom level based on level of detail (LOD)
+                center: [8.0, 6.0]
+            });
+
             var layer1Check = dom.byId("layer1");
             var layer2Check = dom.byId("layer2");
             var queryButton = dom.byId("queryBtn");
+            var qSaveButton = dom.byId("saveQuery");
+            var rerunButton = dom.byId("rerunQuery");
+            var savedQuerySelect = dom.byId("savedQueries");
             // var layer3Check = dom.byId("layer3");
 
             on(layer1Check, "change", function(){
@@ -257,6 +314,20 @@ require([
                 runQuery().then(dispQuery);
             });
 
+            on(qSaveButton, "click", function() {
+                saveQuery();
+            });
+
+            on(rerunButton, "click", function() {
+                var selected = updateSelectedQueryText();
+                if(selected != -1){
+                    rerunQuery(selected);   
+                }
+            })
+
+            on(savedQuerySelect, "change", function(){
+                updateSelectedQueryText();
+            });
             /*
             on(layer3Check, "change", function(){
                 NTLFPLayer.visible = layer3Check.checked;
@@ -292,27 +363,6 @@ require([
               "There are <b>" + cityCount + "</b> cities in this <b>" + extentType + "</b> type urban extent." +
               "\n The net change in NTL brightness DN is <b>" + ntlchange + "</b>";
             }*/
-
-            var layer1Check = dom.byId("layer1");
-            var layer2Check = dom.byId("layer2");
-
-
-
-            var layer1Check = document.getElementById("layer1");
-            var layer2Check = document.getElementById("layer2");
-
-            var queryButton = document.getElementById("queryBtn");
-
-
-            layer1Check.onchange = function(){
-                radcalT0Layer.visible = layer1Check.checked;
-            };
-
-            layer2Check.onchange = function(){
-                radcalT1Layer.visible = layer2Check.checked;
-            };
-
-            queryButton.onclick = function(){ runQuery(); };
 
             // Defining and adding search widget
             var searchWidget = new Search({
