@@ -4,13 +4,14 @@ require([
             "esri/layers/FeatureLayer",
             "esri/layers/ImageryLayer",
             "esri/widgets/Search",
+            "esri/widgets/Home",
             "esri/layers/GraphicsLayer",
             "esri/geometry/geometryEngine",
             "esri/Graphic",
             "esri/symbols/SimpleFillSymbol",
             "esri/symbols/SimpleMarkerSymbol",
-            "dojo/on",
             "dojo/dom",
+            "dojo/on",
             "dojo/dom-construct",
             "dojo/domReady!"
         ], function(Map, MapView, FeatureLayer, ImageryLayer, Search, GraphicsLayer, geometryEngine, Graphic, SimpleFillSymbol, SimpleMarkerSymbol, on, dom, domconstruct) {
@@ -85,6 +86,78 @@ require([
                 outFields: ["*"],
                 visible: true
             });*/
+
+            function anyRadioChecked(radio){
+                for(var n = 0; n < radio.length; n ++){
+                    if(radio[n].checked){
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            function getRadioSelected(radio){
+                for(var n = 0; n < radio.length; n ++){
+                    if(radio[n].checked){
+                        return radio[n].value;
+                    }
+                }
+            }
+
+            function runQuery(){
+                var l = document.getElementById("layerSelect");
+                var layerSelected = l.options[l.selectedIndex].value;
+                var query;
+                var whereLength = 0;
+                var qlayer;
+                if(layerSelected == "T0"){
+                    //T0
+                    qlayer = radcalT0Layer;
+                }
+                else{
+                    //T1
+                    qlayer = radcalT1Layer;
+                }
+                query = qlayer.createQuery();
+                var whereText = "";
+
+                //var ext = document.getElementById("extent");
+                //var extentSelected = ext.options[ext.selectedIndex].value;
+                //create condition for no specified extent (all extents)
+
+                var ntlOp = document.getElementsByName("ntlOperator");
+                var ntlVal = document.getElementById("chgVal").value;
+                if(anyRadioChecked(ntlOp) && ntlVal != ""){
+                    whereLength ++;
+                    if(whereLength > 1){
+                        whereText += " AND ";
+                    }
+                    whereText += " ntlChnCorr " + getRadioSelected(ntlOp) + " " + ntlVal;
+                }
+
+                var arOp = document.getElementsByName("areaOperator");
+                var arVal = document.getElementById("areaVal").value;
+                if(anyRadioChecked(arOp) && arVal != ""){
+                    whereLength ++;
+                    if(whereLength > 1){
+                        whereText += " AND ";
+                    }
+                    whereText += " gAreaKM " + getRadioSelected(arOp) + " " + arVal;
+                }
+
+                var stat = document.getElementsByName("status");
+                if(anyRadioChecked(stat)){
+                    whereLength ++;
+                    if(whereLength > 1){
+                        whereText += " AND ";
+                    }
+                    whereText += " Status = \'" + getRadioSelected(stat) + "\'";
+                }
+                alert(whereText);
+                query.where = whereText;
+
+                return qlayer.queryFeatures(query);
+            }
 
             checkExtentName = function (value, key, data) {
               //Check if Extent has a defined name or is -1
@@ -171,33 +244,49 @@ require([
                 resultsLayer.addMany(features);
             }
 
+<<<<<<< HEAD
             var layer1Check = dom.byId("layer1");
             var layer2Check = dom.byId("layer2");
+=======
 
-            on(layer1Check, "change", function(){
+
+            var layer1Check = document.getElementById("layer1");
+            var layer2Check = document.getElementById("layer2");
+
+            var queryButton = document.getElementById("queryBtn");
+>>>>>>> master
+
+            layer1Check.onchange = function(){
                 radcalT0Layer.visible = layer1Check.checked;
-            })
+            };
 
-            on(layer2Check, "change", function(){
+            layer2Check.onchange = function(){
                 radcalT1Layer.visible = layer2Check.checked;
-            })
+            };
 
+            queryButton.onclick = function(){ runQuery(); };
+
+            // Defining and adding search widget
             var searchWidget = new Search({
               view: view
             });
             searchWidget.startup();
 
             view.ui.add(searchWidget, {
-              position: "top-left",
+              position: "top-right",
               index: 0
             });
 
+            function renderDropdown(){
+                //query the admin bounadries for a list of countries/cities and load them into dropdowns
+            }
+
         });
 
-        function isInt(value) {
-            if (isNaN(value)) {
-                return false;
-            }
-            var x = parseFloat(value);
-            return (x | 0) === x;
-        }
+function isInt(value) {
+    if (isNaN(value)) {
+        return false;
+    }
+    var x = parseFloat(value);
+    return (x | 0) === x;
+}

@@ -44,49 +44,82 @@
     </div>
 
     <hr id="greyLineTop">
-
 	<div id="tableDiv">
         <table id="uiContainer" cellpadding="10" border="1">
 			<tr height="70%" border="1">
 				<td valign="top" width="200px">
-                    <div id="layersDiv">
+                    <div id="layersDiv" cellpadding="0", cellspacing="0">
                         <table width="100%" border="0" cellpadding="5">
                             <tr>
                                 <h3>Toggle Layers</h3>
                             </tr>
                             <tr>
-                                <span id="layerToggle">
-                                    <input type="checkbox" id="layer1"  checked> Radiance Calibrated 1996 Layer <br>
-                                    <input type="checkbox" id="layer2"  checked> Radiance Calibrated 2010 Layer <br>
-                                </span>
-                            </tr>
-                            <tr>
-                                <td colspan="2"><hr></td>
-                            </tr>
-                            <tr>
-                                <!-- filler for form -->
-                            </tr>
-                            <tr>
-                                <td colspan="2"><hr></td>
-                            </tr>
-                            <tr>
-                            </tr>
-                            <tr>
 
-
+                                <div id="layerToggle">
+                                    <input type="checkbox" id="layer1"  checked> RadCal 1996 Layer <br>
+                                    <input type="checkbox" id="layer2"  checked> RadCal 2010 Layer <br>
+                                </div><hr>
                             </tr>
                             <tr>
-                                <td colspan="2"><hr></td>
+                            	<td>
+                            		<strong>Layer</strong><br>
+                            		<select id="layerSelect">
+                            			<option value="T0">1996</option>
+                            			<option value="T1">2010</option>
+                            		</select>
+                            	</td>
+                            </tr>
+                            <tr>
+                            	<td>
+                            		<strong>Extent</strong><br>
+                            		<select id="extent">
+                            		</select>
+                            	</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                	<strong>NTL Change</strong><br>
+                                	<span>
+	                                	<input type="radio" name="ntlOperator" value=">">	&#60; 
+	                                	<input type="radio" name="ntlOperator" value="<"> &#62; 
+	                                	<input type="radio" name="ntlOperator" value="="> &#61; &nbsp;
+	                                	<input type="number" name="ntlChg" id="chgVal">
+	                                </span>
+                                </td>
+                            </tr>
+                            <tr>
+                               	<td>
+                               		<strong>Area (km)</strong><br>
+                               		<span>
+	                                	<input type="radio" name="areaOperator" value=">">	&#60; 
+	                                	<input type="radio" name="areaOperator" value="<"> &#62; 
+	                                	<input type="radio" name="areaOperator" value="="> &#61; &nbsp;
+	                                	<input type="number" name="area" id="areaVal"> 
+	                                </span>
+                               	</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                	<strong>Status</strong><br>
+                                	<input type="radio" name="status" value="Found">Found<br>
+	                                	<input type="radio" name="status" value="Appear">Appear<br>
+	                                	<input type="radio" name="status" value="Disappear">Disappear<br>
+	                                	<input type="radio" name="status" value="Missed">Missed<br>
+                                </td>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <tr>
                             </tr>
                             <tr>
                             	 <td colspan="1" align="center">
-                                    <input class="button" type="button" id="query" value="RUN QUERY">
+                                    <input class="button" type="button" id="queryBtn" value="RUN QUERY">
                                 </td>
                             </tr>
                         </table>
                     </div>
 				</td>
-				<td width="60%">
+				<td width="65%">
                     <div id="viewDiv"></div>
 				</td>
 				<td width="20%">
@@ -165,7 +198,7 @@
 						</table>
 					</div>
 						<div id="saveForm">
-							Name your query: <input type="text" name="queryName">  <input class="button" type="button" id="saveQuery" value="SAVE QUERY">
+							Name your query: <input type="text" id="qNameText" name="queryName">  <input class="button" type="button" id="saveQuery" value="SAVE QUERY">
 						</div>
 					</div>
 				</td>
