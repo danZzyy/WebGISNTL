@@ -77,6 +77,7 @@ require([
                     }
                 }
             }
+<<<<<<< HEAD
             
             /**
              * runQuery() 
@@ -89,6 +90,12 @@ require([
              * RETURN VALUE:
              *  A feature layer of the queried results.
              */ 
+=======
+            // last query run
+            var lastQuery = "";
+
+            var savedQueries = [];
+>>>>>>> master
             function runQuery(){
                 var l = document.getElementById("layerSelect");
                 var layerSelected = l.options[l.selectedIndex].value;
@@ -140,6 +147,7 @@ require([
                 }
                 alert(whereText);
                 query.where = whereText;
+                lastQuery  = whereText;
 
                 return qlayer.queryFeatures(query);
             } 
