@@ -87,6 +87,32 @@ require([
                 visible: true
             });*/
 
+            checkExtentName = function (value, key, data) {
+              //Check if Extent has a defined name or is -1
+              if (data.ExtentName != "-1") {
+                return data.ExtentName;
+              } else {
+                return "This Urban Extent"
+              }
+            }
+
+            checkStatusType = function (value, key, data) {
+              //check Status and return appropriate context explanation
+              console.log(data.Status)
+              switch (data.Status) {
+                case "FOUND":
+                  context = "intersects cities in both 1996 and 2010.";
+                  break;
+                case "MISSED":
+                  context = "does not intersect any cities.";
+                  break;
+                case "APPEAR":
+                  context = "intersects extent only in 2010.";
+              }
+              return context;
+            }
+
+
             function anyRadioChecked(radio){
                 for(var n = 0; n < radio.length; n ++){
                     if(radio[n].checked){
@@ -159,31 +185,6 @@ require([
                 return qlayer.queryFeatures(query);
             }
 
-            checkExtentName = function (value, key, data) {
-              //Check if Extent has a defined name or is -1
-              if (data.ExtentName != "-1") {
-                return data.ExtentName;
-              } else {
-                return "This Urban Extent"
-              }
-            }
-
-            checkStatusType = function (value, key, data) {
-              //check Status and return appropriate context explanation
-              console.log(data.Status)
-              switch (data.Status) {
-                case "FOUND":
-                  context = "intersects cities in both 1996 and 2010.";
-                  break;
-                case "MISSED":
-                  context = "does not intersect any cities.";
-                  break;
-                case "APPEAR":
-                  context = "intersects extent only in 2010.";
-              }
-              return context;
-            }
-
 
             //GraphicsLayer for displaying results
             var resultsLayer = new GraphicsLayer();
@@ -244,17 +245,16 @@ require([
                 resultsLayer.addMany(features);
             }
 
-<<<<<<< HEAD
             var layer1Check = dom.byId("layer1");
             var layer2Check = dom.byId("layer2");
-=======
+
 
 
             var layer1Check = document.getElementById("layer1");
             var layer2Check = document.getElementById("layer2");
 
             var queryButton = document.getElementById("queryBtn");
->>>>>>> master
+
 
             layer1Check.onchange = function(){
                 radcalT0Layer.visible = layer1Check.checked;
