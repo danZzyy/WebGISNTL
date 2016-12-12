@@ -92,7 +92,10 @@ require([
                     }
                 }
             }
+            // last query run
+            var lastQuery = "";
 
+            var savedQueries = [];
             function runQuery(){
                 var l = document.getElementById("layerSelect");
                 var layerSelected = l.options[l.selectedIndex].value;
@@ -144,6 +147,7 @@ require([
                 }
                 alert(whereText);
                 query.where = whereText;
+                lastQuery  = whereText;
 
                 return qlayer.queryFeatures(query);
             }
