@@ -380,7 +380,7 @@ require([
         view: view,
         layerInfos: [{
             layer: radcalT1Layer,
-            title: "Area Change from 1996 to 2010"
+            title: "Area Change 1996-2010 in KM"
         }]
     });
 
