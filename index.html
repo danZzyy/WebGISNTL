@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="UTF-8">
 	<title>GEOG498K Web GIS</title>
@@ -10,149 +11,159 @@
 	<script src="https://js.arcgis.com/4.1"></script>
 	<script src="mapscript.js"></script>
 </head>
+
 <body>
-    <!-- Header Layout -->
-    <div id="headerWrapper">
-        <div class="headerContainer">
-            <!-- Line 1 of header -->
-            <ul class="headerUpperLine">
-                <li class="h_Logo" display="inline">
-                    <img src="http://www.worldbank.org//sites/all/themes/homepage/templates/header/img/logo-wb-header-en.svg"></img>
-                </li>
-                <li class="h_Title" display="inline">The Nighttime Light Dataset Webviewer</li>
-                <li class="h_socialIcons">
-                    <ul class="iconList">
-                        <li><a href="http://www.facebook.com/worldbank">
-                            <img class="img-responsive" src="https://www.worldbank.org/sites/all/themes/homepage/templates/header/img/sm-icons-fb.svg">
-                        </a></li>
-                        <li><a href="http://www.twitter.com/worldbank">
-                            <img src="https://www.worldbank.org/sites/all/themes/homepage/templates/header/img/sm-icons-twitter.svg">
-                        </a></li>
-                        <li><a href="http://instagram.com/worldbank/">
-                            <img src="https://www.worldbank.org/sites/all/themes/homepage/templates/header/img/sm-icons-instagram.svg">
-                        </a></li>
-                        <li><a href="http://www.linkedin.com/company/the-world-bank">
-                            <img src="https://www.worldbank.org/sites/all/themes/homepage/templates/header/img/sm-icons-linkedln.svg">
-                        </a></li>
-                   </ul>
-               </li>
-            </ul>
+	<!-- Header Layout -->
+	<div id="headerWrapper">
+		<div class="headerContainer">
+			<!-- Line 1 of header -->
+			<ul class="headerUpperLine">
+				<li class="h_Logo" display="inline">
+					<img src="http://www.worldbank.org//sites/all/themes/homepage/templates/header/img/logo-wb-header-en.svg"></img>
+				</li>
+				<li class="h_Title" display="inline">The Nighttime Light Dataset Webviewer</li>
+				<li class="h_socialIcons">
+					<ul class="iconList">
+						<li>
+							<a href="http://www.facebook.com/worldbank">
+								<img class="img-responsive" src="https://www.worldbank.org/sites/all/themes/homepage/templates/header/img/sm-icons-fb.svg">
+							</a>
+						</li>
+						<li>
+							<a href="http://www.twitter.com/worldbank">
+								<img src="https://www.worldbank.org/sites/all/themes/homepage/templates/header/img/sm-icons-twitter.svg">
+							</a>
+						</li>
+						<li>
+							<a href="http://instagram.com/worldbank/">
+								<img src="https://www.worldbank.org/sites/all/themes/homepage/templates/header/img/sm-icons-instagram.svg">
+							</a>
+						</li>
+						<li>
+							<a href="http://www.linkedin.com/company/the-world-bank">
+								<img src="https://www.worldbank.org/sites/all/themes/homepage/templates/header/img/sm-icons-linkedln.svg">
+							</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
 
 
-            <div class="nav">
-                <ul class="navList">
-                    <li class="menuHomeIcon">
-                        <a href="http://www.worldbank.org">
-                            <img src="http://www.worldbank.org/sites/all/themes/homepage/templates/header/img/home.png">
-                        </a>
-                    </li>
-                    <li><a href="http://www.worldbank.org/en/about" target="_blank">Web GIS</a></li>
-                    <li><a href="http://data.worldbank.org/">Data</a></li>
-                    <li><a href="http://www.worldbank.org/en/research">Research</a></li>
-                    <li><a href="http://www.worldbank.org/learning">Learning</a></li>
-                    <li><a href="http://www.worldbank.org/en/news">News</a></li>
-                    <li><a href="http://www.worldbank.org/projects">Projects & Operations</a></li>
-                    <li><a href="http://www.worldbank.org/en/publication/reference">Publications</a></li>
-                    <li><a href="http://www.worldbank.org/en/country">Countries</a></li>
-                    <li><a href="http://www.worldbank.org/en/topic">Topics</a></li>
-                    <!--
+			<div class="nav">
+				<ul class="navList">
+					<li class="menuHomeIcon">
+						<a href="http://www.worldbank.org">
+							<img src="http://www.worldbank.org/sites/all/themes/homepage/templates/header/img/home.png">
+						</a>
+					</li>
+					<li><a href="http://www.worldbank.org/en/about" target="_blank">Web GIS</a></li>
+					<li><a href="http://data.worldbank.org/">Data</a></li>
+					<li><a href="http://www.worldbank.org/en/research">Research</a></li>
+					<li><a href="http://www.worldbank.org/learning">Learning</a></li>
+					<li><a href="http://www.worldbank.org/en/news">News</a></li>
+					<li><a href="http://www.worldbank.org/projects">Projects & Operations</a></li>
+					<li><a href="http://www.worldbank.org/en/publication/reference">Publications</a></li>
+					<li><a href="http://www.worldbank.org/en/country">Countries</a></li>
+					<li><a href="http://www.worldbank.org/en/topic">Topics</a></li>
+					<!--
                     <li><a href="">Other Regions</a></li>
                     <li><a href="">Basemaps</a></li>
                     <li><a href="http://www.worldbank.org/" target="_blank">The World Bank</a></li>
                     <li><a href="">University of Maryland</a></li>
                     <li><a href="contact.html" target="_blank">Contact</a></li>
                       -->
-                </ul>
-            </div>
-        </div>
-    </div>
+				</ul>
+			</div>
+		</div>
+	</div>
 
-    <hr id="greyLineTop">
+	<hr id="greyLineTop">
 	<div id="tableDiv">
-        <table id="uiContainer" cellpadding="10" border="1">
-			<tr height="70%" border="1">
+		<table id="uiContainer" cellpadding="10" border="1">
+			<tr height="90%" border="1">
 				<td valign="top" width="200px">
-                    <div id="layersDiv" cellpadding="0", cellspacing="0">
-                        <table width="100%" border="0" cellpadding="5">
-                            <tr>
-                                <h3>Toggle Layers</h3>
-                            </tr>
-                            <tr>
+					<div id="layersDiv" cellpadding="0" , cellspacing="0">
+						<table width="100%" border="0" cellpadding="5">
+							<tr>
+								<h3>Toggle Layers</h3>
+							</tr>
+							<tr>
 
-                                <div id="layerToggle">
-                                    <input type="checkbox" id="layer1"  checked> RadCal 1996 Layer <br>
-                                    <input type="checkbox" id="layer2"  checked> RadCal 2010 Layer <br>
-                                </div><hr>
-                            </tr>
-                            <tr>
-                            	<td>
-                            		<strong>Layer</strong><br>
-                            		<select id="layerSelect">
+								<div id="layerToggle">
+									<input type="checkbox" id="layer1" checked> RadCal 1996 Layer <br>
+									<input type="checkbox" id="layer2" checked> RadCal 2010 Layer <br>
+								</div>
+								<hr>
+							</tr>
+							<tr>
+								<td>
+									<strong>Layer</strong><br>
+									<select id="layerSelect">
                             			<option value="T0">1996</option>
                             			<option value="T1">2010</option>
                             		</select>
-                            	</td>
-                            </tr>
-                            <tr>
-                            	<td>
-                            		<strong>Extent</strong><br>
-                            		<select id="extent">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Extent</strong><br>
+									<select id="extent">
                             		</select>
-                            	</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                	<strong>NTL Change</strong><br>
-                                	<span>
-	                                	<input type="radio" name="ntlOperator" value="<">	&#60; 
-	                                	<input type="radio" name="ntlOperator" value=">"> &#62; 
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>NTL Change</strong><br>
+									<span>
+	                                	<input type="radio" name="ntlOperator" value="<">	&#60;
+	                                	<input type="radio" name="ntlOperator" value=">"> &#62;
 	                                	<input type="radio" name="ntlOperator" value="="> &#61; &nbsp;
 	                                	<input type="number" name="ntlChg" id="chgVal">
 	                                </span>
-                                </td>
-                            </tr>
-                            <tr>
-                               	<td>
-                               		<strong>Area (km)</strong><br>
-                               		<span>
-	                                	<input type="radio" name="areaOperator" value="<">	&#60; 
-	                                	<input type="radio" name="areaOperator" value=">"> &#62; 
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Area (km)</strong><br>
+									<span>
+	                                	<input type="radio" name="areaOperator" value="<">	&#60;
+	                                	<input type="radio" name="areaOperator" value=">"> &#62;
 	                                	<input type="radio" name="areaOperator" value="="> &#61; &nbsp;
-	                                	<input type="number" name="area" id="areaVal"> 
+	                                	<input type="number" name="area" id="areaVal">
 	                                </span>
-                               	</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                	<strong>Status</strong><br>
-                                	<input type="radio" name="status" value="Found">Found<br>
-	                                	<input type="radio" name="status" value="Appear">Appear<br>
-	                                	<input type="radio" name="status" value="Disappear">Disappear<br>
-	                                	<input type="radio" name="status" value="Missed">Missed<br>
-                                </td>
-                            </tr>
-                            <tr>
-                            </tr>
-                            <tr>
-                            </tr>
-                            <tr>
-                            	 <td colspan="1" align="center">
-                                    <input class="button" type="button" id="queryBtn" value="RUN QUERY">
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Status</strong><br>
+									<input type="radio" name="status" value="Found">Found<br>
+									<input type="radio" name="status" value="Appear">Appear<br>
+									<input type="radio" name="status" value="Disappear">Disappear<br>
+									<input type="radio" name="status" value="Missed">Missed<br>
+								</td>
+							</tr>
+							<tr>
+							</tr>
+							<tr>
+							</tr>
+							<tr>
+								<td colspan="1" align="center">
+									<input class="button" type="button" id="queryBtn" value="RUN QUERY">
+								</td>
+							</tr>
+						</table>
+					</div>
 				</td>
-				<td width="65%">
-                    <div id="viewDiv"></div>
+				<td width="70%">
+					<div id="viewDiv"></div>
 				</td>
-				<td width="20%">
+				<td width="15%">
 					<div id="savedDiv">
-                        <h4 align="center">Saved Queries</h4>
-                        <select id="savedQueries" multiple>
+						<h4 align="center">Saved Queries</h4>
+						<select id="savedQueries" multiple>
 
                         </select>
-                        <div id="savedQueryText"></div>
+						<div id="savedQueryText"></div>
 					</div>
 					<input class="button" type="button" id="rerunQuery" value="RUN QUERY AGAIN">
 				</td>
@@ -165,12 +176,9 @@
 						<div id="saveForm">
 							Name your query: <input type="text" id="qNameText" name="queryName">  <input class="button" type="button" id="saveQuery" value="SAVE QUERY">
 						</div>
-					</div>
 				</td>
 				<td>
-					<div id ="popDiv">
-						<h4>popup stuff will go here</h4>
-					</div>
+					<div id ="popDiv"></div>
 				</td>
 			</tr>
 		</table>
