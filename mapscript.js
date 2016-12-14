@@ -4,6 +4,7 @@ require([
     "esri/layers/FeatureLayer",
     "esri/widgets/Search",
     "esri/widgets/Legend",
+    "esri/widgets/BasemapToggle",
     "esri/layers/GraphicsLayer",
     "esri/geometry/geometryEngine",
     "esri/Graphic",
@@ -13,7 +14,7 @@ require([
     "dojo/dom",
     "dojo/dom-construct",
     "dojo/domReady!"
-], function(Map, MapView, FeatureLayer, Search, Legend, GraphicsLayer, geometryEngine, Graphic, SimpleFillSymbol, SimpleMarkerSymbol, on, dom, domconstruct) {
+], function(Map, MapView, FeatureLayer, Search, Legend, BasemapToggle, GraphicsLayer, geometryEngine, Graphic, SimpleFillSymbol, SimpleMarkerSymbol, on, dom, domconstruct) {
     var subsaharanT0 = "https://129.2.6.223:6443/arcgis/rest/services/GEOG498K2016/HAO_NTLData/MapServer/3"
     var radcalT0Layer = new FeatureLayer({
         url: subsaharanT0,
@@ -84,7 +85,7 @@ require([
     var resultsLayer = new GraphicsLayer();
 
     var map = new Map({
-        basemap: "hybrid",
+        basemap: "dark-gray-vector",
         layers: [radcalT0Layer, radcalT1Layer, resultsLayer]
     });
 
@@ -153,18 +154,12 @@ require([
     var savedQueries = [];
 
     function runQuery() {
-        var l = document.getElementById("layerSelect");
+        //var l = document.getElementById("layerSelect");
         var layerSelected = l.options[l.selectedIndex].value;
         var query;
         var whereLength = 0;
         var qlayer;
-        if (layerSelected == "T0") {
-            //T0
-            qlayer = radcalT0Layer;
-        } else {
-            //T1
-            qlayer = radcalT1Layer;
-        }
+        qlayer = radcalT1Layer;
         query = qlayer.createQuery();
         var whereText = "";
 
@@ -280,20 +275,6 @@ require([
         var queryWhere = savedQueries[selected].query;
         //finish this, save which layer is queried
     }
-    //GraphicsLayer for displaying results
-    var resultsLayer = new GraphicsLayer();
-
-    var map = new Map({
-        basemap: "hybrid",
-        layers: [radcalT0Layer, radcalT1Layer, resultsLayer]
-    });
-
-    var view = new MapView({
-        container: "viewDiv", // Reference to the scene div with id viewDiv
-        map: map, //Reference to the map object created before the scene
-        zoom: 7, // Sets the zoom level based on level of detail (LOD)
-        center: [8.0, 6.0]
-    });
 
     var layer1Check = dom.byId("layer1");
     var layer2Check = dom.byId("layer2");
@@ -383,6 +364,12 @@ require([
             title: "Area Change 1996-2010 in KM"
         }]
     });
+
+    var basemapToggle = new BasemapToggle({
+      view: view,  // The view that provides access to the map's "streets" basemap
+      nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
+    });
+    basemapToggle.startup();
 
     // Adds an instance of Legend widget to the
     // bottom right of the view.
