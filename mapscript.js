@@ -155,7 +155,7 @@ require([
 
     function runQuery() {
         //var l = document.getElementById("layerSelect");
-        var layerSelected = l.options[l.selectedIndex].value;
+        //var layerSelected = l.options[l.selectedIndex].value;
         var query;
         var whereLength = 0;
         var qlayer;
@@ -370,6 +370,7 @@ require([
       nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
     });
     basemapToggle.startup();
+    view.ui.add(basemapToggle, "bottom-left");
 
     // Adds an instance of Legend widget to the
     // bottom right of the view.
